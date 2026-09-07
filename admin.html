@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      /* github-pages-base-fix */
+      (function () {
+        var h = location.hostname;
+        if (!h.endsWith("github.io")) return;
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var seg = parts[0];
+        if (seg.indexOf(".") !== -1) return;
+        var el = document.createElement("base");
+        el.setAttribute("href", "/" + seg + "/");
+        document.head.insertBefore(el, document.head.firstChild);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Back Office | CITTÀCICO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-section="admin" class="admin-body">
+    <header class="admin-header">
+      <a class="logo" href="index.html">CITTÀCICO</a>
+      <span class="admin-badge">Back office</span>
+      <div class="admin-header-actions">
+        <a class="account-link-button" href="shop.html">View boutique</a>
+        <button type="button" class="account-link-button" data-admin-signout hidden>
+          Sign out
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-main" data-admin-page>
+      <p class="account-loading" data-admin-loading>Verifying your credentials…</p>
+
+      <!-- ---------- not permitted ---------- -->
+      <section class="admin-denied" data-admin-denied hidden>
+        <h1>Restricted</h1>
+        <p data-admin-denied-message>
+          This area is reserved for the house. Sign in with an administrator account to continue.
+        </p>
+        <a class="btn-checkout" href="account.html">Go to sign in</a>
+      </section>
+
+      <!-- ---------- back office ---------- -->
+      <div data-admin-console hidden>
+        <nav class="admin-tabs" aria-label="Back office sections">
+          <button type="button" class="admin-tab is-active" data-admin-tab="orders">
+            Orders <span class="admin-tab-count" data-count-orders>0</span>
+          </button>
+          <button type="button" class="admin-tab" data-admin-tab="catalogue">
+            Catalogue <span class="admin-tab-count" data-count-products>0</span>
+          </button>
+          <button type="button" class="admin-tab" data-admin-tab="clients">
+            Clients <span class="admin-tab-count" data-count-clients>0</span>
+          </button>
+        </nav>
+
+        <!-- Orders -->
+        <section class="admin-panel is-active" data-admin-section="orders">
+          <div class="admin-stats" data-admin-stats></div>
+          <div class="admin-toolbar">
+            <label class="admin-filter">
+              <span>Status</span>
+              <select data-order-filter>
+                <option value="">All orders</option>
+                <option value="pending">Awaiting confirmation</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="processing">In the atelier</option>
+                <option value="shipped">Despatched</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="refunded">Refunded</option>
+              </select>
+            </label>
+            <button type="button" class="account-link-button" data-orders-refresh>Refresh</button>
+          </div>
+          <div data-admin-orders></div>
+        </section>
+
+        <!-- Catalogue -->
+        <section class="admin-panel" data-admin-section="catalogue">
+          <div class="admin-editor">
+            <div class="admin-editor-head">
+              <h2 data-product-editor-title>Add a piece</h2>
+              <button type="button" class="account-link-button" data-product-new hidden>
+                New piece
+              </button>
+            </div>
+            <form class="account-form admin-product-form" data-product-form novalidate>
+              <input type="hidden" name="id" />
+              <div class="account-form-row">
+                <label>
+                  <span>Name</span>
+                  <input type="text" name="name" required />
+                </label>
+                <label>
+                  <span>Slug</span>
+                  <input type="text" name="slug" required pattern="[a-z0-9\-]+" />
+                  <small>Lowercase letters, numbers and hyphens. Used in the page address.</small>
+                </label>
+              </div>
+              <div class="account-form-row">
+                <label>
+                  <span>Category</span>
+                  <select name="category" required>
+                    <option value="fashion">Fashion</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="fragrance">Fragrance</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Collection label</span>
+                  <input type="text" name="collection" placeholder="Fashion" />
+                </label>
+              </div>
+              <div class="account-form-row">
+                <label>
+                  <span>Price (USD)</span>
+                  <input type="number" name="price" min="0" step="0.01" required />
+                </label>
+                <label>
+                  <span>Display numeral</span>
+                  <input type="text" name="number" maxlength="4" placeholder="01" />
+                </label>
+              </div>
+              <label>
+                <span>Short description</span>
+                <input type="text" name="description" />
+              </label>
+              <div class="account-form-row">
+                <label>
+                  <span>Material</span>
+                  <input type="text" name="material" />
+                </label>
+                <label>
+                  <span>Tone</span>
+                  <input type="text" name="tone" />
+                </label>
+              </div>
+              <label>
+                <span>Details</span>
+                <textarea name="details" rows="3"></textarea>
+              </label>
+              <div class="account-form-row">
+                <label>
+                  <span>Status</span>
+                  <select name="status">
+                    <option value="active">Active — visible in the boutique</option>
+                    <option value="draft">Draft — hidden</option>
+                    <option value="archived">Archived — hidden</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Order on page</span>
+                  <input type="number" name="sort_order" min="0" step="1" value="0" />
+                </label>
+              </div>
+              <div class="account-form-row">
+                <label class="account-checkbox">
+                  <input type="checkbox" name="track_inventory" />
+                  <span>Track stock for this piece</span>
+                </label>
+                <label>
+                  <span>Stock on hand</span>
+                  <input type="number" name="stock_quantity" min="0" step="1" value="0" />
+                </label>
+              </div>
+              <label>
+                <span>Hero image</span>
+                <input type="file" name="image" accept="image/*" />
+                <small>Optional. Replaces the current image. Up to 10 MB.</small>
+              </label>
+              <p class="account-message" data-product-message hidden></p>
+              <div class="admin-form-actions">
+                <button type="submit" class="btn-checkout">Save piece</button>
+                <button type="button" class="account-link-button" data-product-cancel hidden>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div data-admin-products></div>
+        </section>
+
+        <!-- Clients -->
+        <section class="admin-panel" data-admin-section="clients">
+          <div class="admin-toolbar">
+            <label class="admin-filter admin-filter--grow">
+              <span>Search</span>
+              <input type="search" data-client-search placeholder="Name, email or region" />
+            </label>
+          </div>
+          <div data-admin-clients></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/cittacico-backend.js"></script>
+    <script src="js/cittacico-admin.js"></script>
+  </body>
+</html>

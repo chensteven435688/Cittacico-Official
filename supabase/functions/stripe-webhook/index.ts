@@ -1,0 +1,152 @@
+/**
+ * stripe-webhook
+ *
+ * Stripe tells us here, server to server, whether money actually moved. The
+ * browser's return trip to payment-success.html is only a courtesy; this is
+ * the single place an order is marked paid.
+ *
+ * Deployed with verify_jwt = false because Stripe cannot present a Supabase
+ * JWT. Authentication is the Stripe signature check below, which rejects any
+ * request not signed with STRIPE_WEBHOOK_SECRET.
+ */
+
+import { createClient } from "jsr:@supabase/supabase-js@2";
+import Stripe from "npm:stripe@^22";
+
+/* Deno needs the Web Crypto provider for asynchronous signature checks. */
+const cryptoProvider = Stripe.createSubtleCryptoProvider();
+
+const admin = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  { auth: { persistSession: false, autoRefreshToken: false } },
+);
+
+async function findOrder(session: Stripe.Checkout.Session) {
+  const orderId = session.metadata?.order_id;
+
+  const { data } = orderId
+    ? await admin
+      .from("orders")
+      .select("id, user_id, payment_status")
+      .eq("id", orderId)
+      .maybeSingle()
+    : await admin
+      .from("orders")
+      .select("id, user_id, payment_status")
+      .eq("stripe_session_id", session.id)
+      .maybeSingle();
+
+  return data;
+}
+
+Deno.serve(async (req: Request) => {
+  const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+  const secret = Deno.env.get("STRIPE_WEBHOOK_SECRET");
+
+  /* Built per request, not at module load: the Stripe client throws on an
+     empty key, which would take the whole function down before payments
+     are configured. */
+  if (!stripeKey || !secret) {
+    return new Response("Payments are not configured.", { status: 503 });
+  }
+
+  const signature = req.headers.get("Stripe-Signature");
+  if (!signature) {
+    return new Response("Missing signature.", { status: 400 });
+  }
+
+  const stripe = new Stripe(stripeKey);
+
+  /* The raw body is required: verification runs over the exact bytes sent. */
+  const body = await req.text();
+
+  let event: Stripe.Event;
+  try {
+    event = await stripe.webhooks.constructEventAsync(
+      body,
+      signature,
+      secret,
+      undefined,
+      cryptoProvider,
+    );
+  } catch (error) {
+    console.error("signature verification failed", error);
+    return new Response("Invalid signature.", { status: 400 });
+  }
+
+  try {
+    switch (event.type) {
+      case "checkout.session.completed":
+      case "checkout.session.async_payment_succeeded": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const order = await findOrder(session);
+        if (!order) {
+          console.error("no order matched session", session.id);
+          break;
+        }
+
+        await admin
+          .from("orders")
+          .update({
+            payment_status: "paid",
+            status: "confirmed",
+            stripe_session_id: session.id,
+            stripe_payment_intent_id: typeof session.payment_intent === "string"
+              ? session.payment_intent
+              : session.payment_intent?.id ?? null,
+          })
+          .eq("id", order.id);
+
+        /* Paid, so the bag has served its purpose. */
+        if (order.user_id) {
+          await admin.from("cart_items").delete().eq("user_id", order.user_id);
+        }
+        break;
+      }
+
+      case "checkout.session.async_payment_failed":
+      case "checkout.session.expired": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const order = await findOrder(session);
+        /* Never overwrite a payment that already settled. */
+        if (!order || order.payment_status === "paid") break;
+
+        await admin
+          .from("orders")
+          .update({
+            payment_status: event.type === "checkout.session.expired"
+              ? "unpaid"
+              : "failed",
+            status: "cancelled",
+          })
+          .eq("id", order.id);
+        break;
+      }
+
+      case "charge.refunded": {
+        const charge = event.data.object as Stripe.Charge;
+        const paymentIntent = typeof charge.payment_intent === "string"
+          ? charge.payment_intent
+          : charge.payment_intent?.id;
+        if (!paymentIntent) break;
+
+        await admin
+          .from("orders")
+          .update({ payment_status: "refunded", status: "refunded" })
+          .eq("stripe_payment_intent_id", paymentIntent);
+        break;
+      }
+
+      default:
+        /* Everything else is acknowledged so Stripe stops retrying. */
+        break;
+    }
+  } catch (error) {
+    console.error("webhook handling failed", event.type, error);
+    /* A 500 asks Stripe to retry, which is what we want on a transient fault. */
+    return new Response("Handler failed.", { status: 500 });
+  }
+
+  return Response.json({ received: true });
+});

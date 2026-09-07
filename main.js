@@ -1,4 +1,6 @@
-/* Product catalog: inlined so shop/product pages work if js/products.js fails to load on GitHub Pages. */
+/* Product catalog: the live copy lives in Supabase and replaces this on load.
+   It stays inlined so the boutique paints instantly and still renders if the
+   network is unavailable. */
 window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   {
     slug: "sera-coat",
@@ -226,6 +228,8 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   var ORDER_KEY = "cittacico-last-order";
   /* The bag belongs to the shopping section only; the gateway and the house pages omit it. */
   var isShopSection = document.body.getAttribute("data-section") === "shop";
+  /* Set once checkout has initialised, so a later catalogue load can refresh its totals. */
+  var refreshCheckoutSummary = null;
 
   function formatPrice(value) {
     return new Intl.NumberFormat("en-US", {
@@ -242,6 +246,15 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }).format(value);
+  }
+
+  /* False until the house holds a merchant account. See js/supabase-config.js. */
+  function paymentsEnabled() {
+    return Boolean(
+      window.CITTACICO &&
+        window.CITTACICO.paymentsEnabled &&
+        window.CITTACICO.paymentsEnabled()
+    );
   }
 
   function generateOrderId() {
@@ -272,6 +285,10 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     window.localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateBagCount();
     renderCartDrawer();
+    /* Signed-in clients keep their bag on the server, so it follows them. */
+    if (window.CITTACICO && window.CITTACICO.scheduleCartSave) {
+      window.CITTACICO.scheduleCartSave();
+    }
   }
 
   function cartCount() {
@@ -535,7 +552,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       '">Add to Bag</button>' +
       '<a class="product-link-alt" href="shop.html">Continue shopping</a>' +
       "</div>" +
-      '<p class="product-prototype-note">Live preview—product detail and bag; fulfillment and payments connect at launch.</p>' +
+      '<p class="product-prototype-note">Complimentary worldwide delivery on every order.</p>' +
       "</div>" +
       "</div>" +
       "</div>" +
@@ -705,6 +722,21 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     if (emptyEl) emptyEl.hidden = true;
     if (flowEl) flowEl.hidden = false;
 
+    /* The markup carries the no-payment wording, so only the live case
+       needs rewriting. Connecting Stripe later touches nothing else. */
+    if (paymentsEnabled()) {
+      var noteEl = main.querySelector("[data-checkout-payment-note]");
+      if (noteEl) {
+        noteEl.textContent =
+          "Payment is taken by Stripe on a secure page of their own. Card and " +
+          "wallet details are entered there and never touch this site.";
+      }
+      var submitEl = main.querySelector("[data-checkout-submit]");
+      if (submitEl) submitEl.textContent = "Continue to secure payment";
+      var continueEl = main.querySelector("[data-checkout-continue-label]");
+      if (continueEl) continueEl.textContent = "Continue to payment";
+    }
+
     var step = 1;
     var steps = main.querySelectorAll("[data-checkout-step]");
     var indicators = main.querySelectorAll("[data-checkout-indicator]");
@@ -813,6 +845,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
           var emailInput = form.querySelector('input[name="email"]');
           checkoutEmail = emailInput ? emailInput.value.trim() : "";
         }
+        if (step === 2) renderDeliveryReview();
         if (step < 3) showStep(step + 1);
         return;
       }
@@ -821,19 +854,65 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       if (backBtn) {
         e.preventDefault();
         if (step > 1) showStep(step - 1);
-        return;
-      }
-
-      if (e.target.closest("[data-checkout-simulate-failure]")) {
-        window.location.href = "payment-failure.html";
       }
     });
+
+    /* Payment details live on Stripe's page, so step three shows the client
+       what they are about to confirm rather than asking for a card. */
+    function renderDeliveryReview() {
+      var target = main.querySelector("[data-checkout-review-address]");
+      if (!target || !form) return;
+      var fd = new FormData(form);
+      target.textContent = ["fullName", "address1", "address2", "city", "region", "postal", "country"]
+        .map(function (field) {
+          return (fd.get(field) || "").toString().trim();
+        })
+        .filter(Boolean)
+        .join(", ");
+    }
 
     if (form) {
       form.addEventListener("keydown", function (e) {
         if (e.key !== "Enter") return;
         if (step < 3) e.preventDefault();
       });
+      var errorEl = null;
+      function showCheckoutError(message) {
+        if (!errorEl) {
+          errorEl = document.createElement("p");
+          errorEl.className = "checkout-error";
+          errorEl.setAttribute("role", "alert");
+          var stepEl = main.querySelector('[data-checkout-step="3"]');
+          if (stepEl) stepEl.appendChild(errorEl);
+        }
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      }
+
+      /* The confirmation page reads whole dollars; the server answers in cents. */
+      function storeConfirmation(order) {
+        var payload = {
+          id: order.orderNumber,
+          email: order.email,
+          createdAt: order.placedAt,
+          subtotal: order.subtotalCents / 100,
+          shipping: order.shippingCents / 100,
+          tax: order.taxCents / 100,
+          total: order.totalCents / 100,
+          items: order.items.map(function (line) {
+            return {
+              slug: line.slug,
+              name: line.name,
+              quantity: line.quantity,
+              lineTotal: line.lineTotalCents / 100
+            };
+          })
+        };
+        try {
+          window.sessionStorage.setItem(ORDER_KEY, JSON.stringify(payload));
+        } catch (err) {}
+      }
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         if (step !== 3) return;
@@ -842,42 +921,61 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
         if (!cart.length) return;
 
         var fd = new FormData(form);
-        var order = {
-          id: generateOrderId(),
-          email: checkoutEmail || (fd.get("email") || "").toString().trim(),
-          createdAt: new Date().toISOString(),
-          subtotal: cartSubtotal(),
-          shipping: 0,
-          tax: 0,
-          total: cartSubtotal(),
-          delivery: {
-            fullName: (fd.get("fullName") || "").toString(),
-            address1: (fd.get("address1") || "").toString(),
-            address2: (fd.get("address2") || "").toString(),
-            city: (fd.get("city") || "").toString(),
-            region: (fd.get("region") || "").toString(),
-            postal: (fd.get("postal") || "").toString(),
-            country: (fd.get("country") || "").toString()
-          },
-          items: cart.map(function (item) {
-            return {
-              slug: item.slug,
-              name: item.name,
-              quantity: item.quantity,
-              lineTotal: item.price * item.quantity
-            };
-          })
+        var email = checkoutEmail || (fd.get("email") || "").toString().trim();
+        var shipping = {
+          fullName: (fd.get("fullName") || "").toString(),
+          line1: (fd.get("address1") || "").toString(),
+          line2: (fd.get("address2") || "").toString(),
+          city: (fd.get("city") || "").toString(),
+          region: (fd.get("region") || "").toString(),
+          postalCode: (fd.get("postal") || "").toString(),
+          country: (fd.get("country") || "").toString()
         };
-        try {
-          window.sessionStorage.setItem(ORDER_KEY, JSON.stringify(order));
-        } catch (err) {}
-        writeCart([]);
-        window.location.href = "payment-success.html";
+
+        if (!window.CITTACICO || !window.CITTACICO.isOnline()) {
+          showCheckoutError("The boutique is offline. Please try again shortly.");
+          return;
+        }
+
+        var submitButton = form.querySelector('[type="submit"]');
+        var submitLabel = submitButton ? submitButton.textContent : "";
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = "Placing your order…";
+        }
+        if (errorEl) errorEl.hidden = true;
+
+        window.CITTACICO.placeOrder({
+          items: cart.map(function (item) {
+            return { slug: item.slug, quantity: item.quantity };
+          }),
+          email: email,
+          shipping: shipping,
+          marketingOptIn: (fd.get("marketing") || "").toString() === "yes"
+        })
+          .then(function (result) {
+            storeConfirmation(result.order);
+            if (result.checkoutUrl) {
+              /* Off to Stripe. The bag is cleared by the webhook once paid. */
+              window.location.href = result.checkoutUrl;
+              return;
+            }
+            writeCart([]);
+            window.location.href = "payment-success.html";
+          })
+          .catch(function (error) {
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = submitLabel;
+            }
+            showCheckoutError(error.message || "The order could not be completed.");
+          });
       });
     }
 
     showStep(1);
     renderCheckoutSummary();
+    refreshCheckoutSummary = renderCheckoutSummary;
   }
 
   function initOrderConfirmationPage() {
@@ -908,11 +1006,16 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     } catch (e) {}
     if (!order || !order.id) return;
 
+    /* Landing here with a recorded order means the purchase went through. */
+    writeCart([]);
+
     if (msgEl) {
-      msgEl.textContent =
-        "A confirmation has been sent to " +
-        (order.email || "your email") +
-        ". This preview does not send email yet.";
+      var where = order.email || "your email";
+      msgEl.textContent = paymentsEnabled()
+        ? "A receipt has been sent to " + where + "."
+        : "Your order is recorded. The house will write to " +
+          where +
+          " to confirm the details and arrange settlement.";
     }
     if (idEl) idEl.textContent = order.id;
     if (idWrap) idWrap.hidden = false;
@@ -947,6 +1050,33 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   renderProductPage();
   initCheckoutPage();
   initOrderConfirmationPage();
+
+  /*
+   * Bridge for the backend layer. The bundled catalogue paints immediately so
+   * the boutique never waits on the network; the live catalogue from Supabase
+   * then replaces it in place once it arrives.
+   */
+  window.CITTACICO_APP = {
+    setProducts: function (list) {
+      if (!list || !list.length) return;
+      products = list;
+      window.CITTACICO_PRODUCTS = list;
+      hydrateCollectionCards();
+      renderShopPage();
+      renderProductPage();
+      renderCartDrawer();
+      if (refreshCheckoutSummary) refreshCheckoutSummary();
+    },
+    refreshBag: function () {
+      updateBagCount();
+      renderCartDrawer();
+      if (refreshCheckoutSummary) refreshCheckoutSummary();
+    },
+    readCart: readCart,
+    writeCart: writeCart,
+    getProduct: getProduct,
+    formatPrice: formatPrice
+  };
 
   /* Desktop mega menus: click to keep open when pointer leaves the label; click again to visit link */
   var megaNavLinks = document.querySelectorAll(".nav-item.has-mega > .nav-primary");

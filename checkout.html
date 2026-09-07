@@ -197,22 +197,20 @@
                   </button>
                 </div>
                 <p class="checkout-footnote">
-                  If your email matches an existing Cittàcico profile, your order may be linked
-                  automatically once accounts go live.
+                  Guest orders are recorded against your email, and appear in your account if you
+                  register with the same address later.
                 </p>
 
                 <div class="checkout-divider"><span>or</span></div>
 
                 <p class="checkout-alt-label">Sign in to your maison account</p>
                 <div class="checkout-actions checkout-actions--row">
-                  <button type="button" class="btn-checkout-outline" disabled aria-disabled="true">
-                    Sign in
-                  </button>
-                  <button type="button" class="btn-checkout-outline" disabled aria-disabled="true">
-                    Sign in with Google
-                  </button>
+                  <a class="btn-checkout-outline" href="account.html">Sign in</a>
+                  <a class="btn-checkout-outline" href="account.html">Create an account</a>
                 </div>
-                <p class="checkout-footnote">Maison account sign-in is not enabled in this release.</p>
+                <p class="checkout-footnote">
+                  Signing in keeps your bag and your order history with the house.
+                </p>
               </div>
 
               <div class="checkout-step" data-checkout-step="2" hidden>
@@ -288,74 +286,30 @@
                 </div>
                 <div class="checkout-actions checkout-actions--split">
                   <button type="button" class="btn-checkout-ghost" data-checkout-back>Back</button>
-                  <button type="button" class="btn-checkout-primary" data-checkout-next>
-                    Continue to payment
+                  <button type="button" class="btn-checkout-primary" data-checkout-next data-checkout-continue-label>
+                    Continue to review
                   </button>
                 </div>
               </div>
 
               <div class="checkout-step" data-checkout-step="3" hidden>
-                <p class="checkout-step-intro">
-                  Card fields are for layout only—no charge is processed yet. Apple Pay and Stripe
-                  will be connected when the boutique goes live.
+                <!-- Wording is set in main.js from CITTACICO_SUPABASE.paymentsEnabled,
+                     so connecting a merchant account later changes nothing here. -->
+                <p class="checkout-step-intro" data-checkout-payment-note>
+                  No payment is taken at this stage. The house will write to you to confirm
+                  your order and arrange settlement.
                 </p>
-                <div class="checkout-actions checkout-actions--stack checkout-wallet-row">
-                  <button type="button" class="btn-apple-pay" disabled aria-disabled="true">
-                    <span class="btn-apple-pay-label">Apple Pay</span>
-                  </button>
-                  <button type="button" class="btn-stripe" disabled aria-disabled="true">
-                    Pay with Stripe
-                  </button>
-                </div>
-                <p class="checkout-pay-divider"><span>or pay by card</span></p>
-                <div class="form-stack">
-                  <label class="checkout-field">
-                    <span class="checkout-field-label">Name on card *</span>
-                    <input class="form-field" type="text" name="cardName" autocomplete="cc-name" required />
-                  </label>
-                  <label class="checkout-field">
-                    <span class="checkout-field-label">Card number *</span>
-                    <input
-                      class="form-field"
-                      type="text"
-                      name="cardNumber"
-                      inputmode="numeric"
-                      autocomplete="cc-number"
-                      placeholder="0000 0000 0000 0000"
-                      required
-                    />
-                  </label>
-                  <div class="checkout-field-row">
-                    <label class="checkout-field">
-                      <span class="checkout-field-label">Expiry *</span>
-                      <input
-                        class="form-field"
-                        type="text"
-                        name="cardExp"
-                        autocomplete="cc-exp"
-                        placeholder="MM / YY"
-                        required
-                      />
-                    </label>
-                    <label class="checkout-field">
-                      <span class="checkout-field-label">Security code *</span>
-                      <input
-                        class="form-field"
-                        type="text"
-                        name="cardCvc"
-                        autocomplete="cc-csc"
-                        inputmode="numeric"
-                        required
-                      />
-                    </label>
-                  </div>
+                <div class="checkout-review" data-checkout-review>
+                  <p class="checkout-review-label">Delivering to</p>
+                  <p class="checkout-review-body" data-checkout-review-address></p>
                 </div>
                 <div class="checkout-actions checkout-actions--stack">
-                  <button type="submit" class="btn-checkout-primary btn-checkout-primary--wide">
-                    Complete order
-                  </button>
-                  <button type="button" class="checkout-text-btn" data-checkout-simulate-failure>
-                    Preview a declined payment
+                  <button
+                    type="submit"
+                    class="btn-checkout-primary btn-checkout-primary--wide"
+                    data-checkout-submit
+                  >
+                    Place your order
                   </button>
                 </div>
                 <div class="checkout-actions checkout-actions--split" style="margin-top: 1.5rem">
@@ -461,6 +415,9 @@
         </div>
       </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/cittacico-backend.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
