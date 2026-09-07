@@ -206,7 +206,7 @@
                 <p class="checkout-alt-label">Sign in to your maison account</p>
                 <div class="checkout-actions checkout-actions--row">
                   <a class="btn-checkout-outline" href="account.html">Sign in</a>
-                  <a class="btn-checkout-outline" href="account.html">Create an account</a>
+                  <a class="btn-checkout-outline" href="register.html">Create an account</a>
                 </div>
                 <p class="checkout-footnote">
                   Signing in keeps your bag and your order history with the house.
@@ -251,18 +251,6 @@
                       <input class="form-field" type="text" name="city" autocomplete="address-level2" required />
                     </label>
                     <label class="checkout-field">
-                      <span class="checkout-field-label">State / region *</span>
-                      <input
-                        class="form-field"
-                        type="text"
-                        name="region"
-                        autocomplete="address-level1"
-                        required
-                      />
-                    </label>
-                  </div>
-                  <div class="checkout-field-row">
-                    <label class="checkout-field">
                       <span class="checkout-field-label">Postal code *</span>
                       <input
                         class="form-field"
@@ -272,14 +260,23 @@
                         required
                       />
                     </label>
+                  </div>
+                  <div class="checkout-field-row" data-location-fields data-location-require-subdivision="true">
                     <label class="checkout-field">
                       <span class="checkout-field-label">Country *</span>
+                      <select class="form-field" name="country" data-location-country required></select>
+                    </label>
+                    <label class="checkout-field">
+                      <span class="checkout-field-label" data-location-subdivision-label>State / region *</span>
+                      <select class="form-field" name="region" data-location-subdivision required></select>
                       <input
                         class="form-field"
                         type="text"
-                        name="country"
-                        autocomplete="country-name"
-                        required
+                        name="region"
+                        data-location-subdivision-text
+                        autocomplete="address-level1"
+                        hidden
+                        disabled
                       />
                     </label>
                   </div>
@@ -418,6 +415,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/cittacico-backend.js"></script>
+    <script src="js/cittacico-locations.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

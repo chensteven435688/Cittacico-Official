@@ -4178,6 +4178,28 @@ h1.series-hero-title {
   color: #d98a8a;
 }
 
+.account-panel--narrow {
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.account-switch {
+  margin: 1.75rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--header-border);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+}
+.account-switch a {
+  color: var(--gold);
+  text-decoration: none;
+  margin-left: 0.35rem;
+}
+.account-switch a:hover {
+  text-decoration: underline;
+}
+
 .account-loading,
 .account-empty {
   color: var(--muted);
@@ -4185,7 +4207,17 @@ h1.series-hero-title {
   padding: 2rem 0;
 }
 
-.account-gate,
+.account-gate {
+  display: block;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+.account-gate[hidden],
+.account-dashboard[hidden],
+.account-panel[hidden],
+[data-register-panel][hidden] {
+  display: none !important;
+}
 .account-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -4317,6 +4349,12 @@ h1.series-hero-title {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+}
+.btn-signout {
+  min-width: 10rem;
+  padding: 1.05rem 2rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
 }
 .account-greeting {
   font-family: var(--font-serif);

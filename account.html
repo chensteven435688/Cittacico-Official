@@ -122,7 +122,7 @@
 
           <!-- ---------- signed out ---------- -->
           <div class="account-gate" data-account-auth hidden>
-            <div class="account-panel">
+            <div class="account-panel account-panel--narrow">
               <h2>Sign in</h2>
               <p class="account-panel-lede">Return to your saved bag and order history.</p>
               <form class="account-form" data-signin-form novalidate>
@@ -143,68 +143,10 @@
                   Resend confirmation email
                 </button>
               </form>
-            </div>
-
-            <div class="account-panel">
-              <h2>Create an account</h2>
-              <p class="account-panel-lede">
-                So the house may address you properly, and keep your acquisitions on record.
+              <p class="account-switch">
+                Not a member yet?
+                <a href="register.html">Create an account</a>
               </p>
-              <form class="account-form" data-signup-form novalidate>
-                <label>
-                  <span>Full name</span>
-                  <input type="text" name="fullName" autocomplete="name" required />
-                </label>
-                <label>
-                  <span>Email</span>
-                  <input type="email" name="email" autocomplete="email" required />
-                </label>
-                <label>
-                  <span>Password</span>
-                  <input
-                    type="password"
-                    name="password"
-                    autocomplete="new-password"
-                    minlength="8"
-                    required
-                  />
-                  <small>At least 8 characters.</small>
-                </label>
-                <div class="account-form-row">
-                  <label>
-                    <span>Date of birth</span>
-                    <input type="date" name="birthday" autocomplete="bday" />
-                  </label>
-                  <label>
-                    <span>Sex</span>
-                    <select name="sex">
-                      <option value="">Prefer not to say</option>
-                      <option value="female">Female</option>
-                      <option value="male">Male</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </label>
-                </div>
-                <div class="account-form-row">
-                  <label>
-                    <span>Region</span>
-                    <input type="text" name="region" placeholder="Country or region" />
-                  </label>
-                  <label>
-                    <span>Telephone</span>
-                    <input type="tel" name="phone" autocomplete="tel" />
-                  </label>
-                </div>
-                <label class="account-checkbox">
-                  <input type="checkbox" name="marketingOptIn" value="yes" />
-                  <span>Send me house correspondence and private viewings.</span>
-                </label>
-                <p class="account-message" data-signup-message hidden></p>
-                <button type="submit" class="btn-checkout">Create account</button>
-                <button type="button" class="account-link-button" data-resend-signup hidden>
-                  Resend confirmation email
-                </button>
-              </form>
             </div>
           </div>
 
@@ -216,7 +158,7 @@
                 <a class="account-link-button" href="admin.html" data-account-admin-link hidden
                   >Back office</a
                 >
-                <button type="button" class="account-link-button" data-signout>Sign out</button>
+                <button type="button" class="btn-checkout btn-signout" data-signout>Sign out</button>
               </div>
             </div>
 
@@ -246,16 +188,27 @@
                       </select>
                     </label>
                   </div>
-                  <div class="account-form-row">
+                  <div class="account-form-row" data-location-fields data-location-profile>
                     <label>
-                      <span>Region</span>
-                      <input type="text" name="region" placeholder="Country or region" />
+                      <span>Country</span>
+                      <select name="country" data-location-country></select>
                     </label>
                     <label>
-                      <span>Telephone</span>
-                      <input type="tel" name="phone" autocomplete="tel" />
+                      <span data-location-subdivision-label>State / region</span>
+                      <select name="region_select" data-location-subdivision></select>
+                      <input
+                        type="text"
+                        name="region_text"
+                        data-location-subdivision-text
+                        hidden
+                        disabled
+                      />
                     </label>
                   </div>
+                  <label>
+                    <span>Telephone</span>
+                    <input type="tel" name="phone" autocomplete="tel" />
+                  </label>
                   <label class="account-checkbox">
                     <input type="checkbox" name="marketing_opt_in" />
                     <span>Send me house correspondence and private viewings.</span>
@@ -289,18 +242,26 @@
                       <input type="text" name="city" autocomplete="address-level2" required />
                     </label>
                     <label>
-                      <span>Region</span>
-                      <input type="text" name="region" autocomplete="address-level1" />
-                    </label>
-                  </div>
-                  <div class="account-form-row">
-                    <label>
                       <span>Postal code</span>
                       <input type="text" name="postal_code" autocomplete="postal-code" />
                     </label>
+                  </div>
+                  <div class="account-form-row" data-location-fields data-location-require-subdivision="true">
                     <label>
                       <span>Country</span>
-                      <input type="text" name="country" autocomplete="country-name" required />
+                      <select name="country" data-location-country required></select>
+                    </label>
+                    <label>
+                      <span data-location-subdivision-label>State / region</span>
+                      <select name="region" data-location-subdivision></select>
+                      <input
+                        type="text"
+                        name="region"
+                        data-location-subdivision-text
+                        autocomplete="address-level1"
+                        hidden
+                        disabled
+                      />
                     </label>
                   </div>
                   <p class="account-message" data-address-message hidden></p>
@@ -367,6 +328,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/cittacico-backend.js"></script>
+    <script src="js/cittacico-locations.js"></script>
     <script src="main.js"></script>
     <script src="js/cittacico-account.js"></script>
   </body>

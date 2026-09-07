@@ -14,7 +14,6 @@
   const dashboardEl = page.querySelector("[data-account-dashboard]");
   const recoveryEl = page.querySelector("[data-account-recovery]");
   const resendSignIn = page.querySelector("[data-resend-confirmation]");
-  const resendSignUp = page.querySelector("[data-resend-signup]");
 
   const STATUS_LABELS = {
     pending: "Awaiting confirmation",
@@ -75,28 +74,31 @@
 
   const signInForm = page.querySelector("[data-signin-form]");
   const signInMessage = page.querySelector("[data-signin-message]");
+  const resetPasswordBtn = page.querySelector("[data-reset-password]");
 
-  signInForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    if (!signInForm.reportValidity()) return;
+  if (signInForm) {
+    signInForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      if (!signInForm.reportValidity()) return;
 
-    const data = new FormData(signInForm);
-    say(signInMessage, "");
-    busy(signInForm, true, "Signing in…");
+      const data = new FormData(signInForm);
+      say(signInMessage, "");
+      busy(signInForm, true, "Signing in…");
 
-    try {
-      await backend.signIn(
-        String(data.get("email")).trim(),
-        String(data.get("password"))
-      );
-      window.location.reload();
-    } catch (error) {
-      busy(signInForm, false);
-      const message = error.message || "Those details were not recognised.";
-      say(signInMessage, message, "error");
-      if (/not confirmed/i.test(message) && resendSignIn) resendSignIn.hidden = false;
-    }
-  });
+      try {
+        await backend.signIn(
+          String(data.get("email")).trim(),
+          String(data.get("password"))
+        );
+        window.location.href = "shop.html";
+      } catch (error) {
+        busy(signInForm, false);
+        const message = error.message || "Those details were not recognised.";
+        say(signInMessage, message, "error");
+        if (/not confirmed/i.test(message) && resendSignIn) resendSignIn.hidden = false;
+      }
+    });
+  }
 
   async function resendFor(email, messageEl, button) {
     if (!email) {
@@ -114,80 +116,26 @@
     }
   }
 
-  if (resendSignIn) {
+  if (resendSignIn && signInForm) {
     resendSignIn.addEventListener("click", function () {
       const email = String(new FormData(signInForm).get("email") || "").trim();
       resendFor(email, signInMessage, resendSignIn);
     });
   }
 
-  page.querySelector("[data-reset-password]").addEventListener("click", async function () {
-    const email = String(new FormData(signInForm).get("email") || "").trim();
-    if (!email) {
-      say(signInMessage, "Enter your email above, then ask again.", "error");
-      return;
-    }
-    try {
-      await backend.sendPasswordReset(email);
-      say(signInMessage, "A reset link is on its way to " + email + ".", "success");
-    } catch (error) {
-      say(signInMessage, error.message || "The reset could not be sent.", "error");
-    }
-  });
-
-  const signUpForm = page.querySelector("[data-signup-form]");
-  const signUpMessage = page.querySelector("[data-signup-message]");
-
-  signUpForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    if (!signUpForm.reportValidity()) return;
-
-    const data = new FormData(signUpForm);
-    say(signUpMessage, "");
-    busy(signUpForm, true, "Creating…");
-
-    try {
-      const result = await backend.signUp({
-        email: String(data.get("email")).trim(),
-        password: String(data.get("password")),
-        fullName: String(data.get("fullName") || "").trim(),
-        birthday: String(data.get("birthday") || ""),
-        sex: String(data.get("sex") || ""),
-        region: String(data.get("region") || "").trim(),
-        phone: String(data.get("phone") || "").trim(),
-        marketingOptIn: data.get("marketingOptIn") === "yes"
-      });
-
-      if (result.session) {
-        window.location.reload();
+  if (resetPasswordBtn && signInForm) {
+    resetPasswordBtn.addEventListener("click", async function () {
+      const email = String(new FormData(signInForm).get("email") || "").trim();
+      if (!email) {
+        say(signInMessage, "Enter your email above, then ask again.", "error");
         return;
       }
-      /* Email confirmation is switched on for this project. */
-      busy(signUpForm, false);
-      say(
-        signUpMessage,
-        "Your account is created. Confirm the link we sent to " +
-          String(data.get("email")).trim() +
-          " to sign in.",
-        "success"
-      );
-      if (resendSignUp) {
-        resendSignUp.hidden = false;
-        resendSignUp.dataset.email = String(data.get("email")).trim();
+      try {
+        await backend.sendPasswordReset(email);
+        say(signInMessage, "A reset link is on its way to " + email + ".", "success");
+      } catch (error) {
+        say(signInMessage, error.message || "The reset could not be sent.", "error");
       }
-      signUpForm.reset();
-    } catch (error) {
-      busy(signUpForm, false);
-      say(signUpMessage, error.message || "The account could not be created.", "error");
-    }
-  });
-
-  if (resendSignUp) {
-    resendSignUp.addEventListener("click", function () {
-      const email =
-        resendSignUp.dataset.email ||
-        String(new FormData(signUpForm).get("email") || "").trim();
-      resendFor(email, signUpMessage, resendSignUp);
     });
   }
 
@@ -231,9 +179,12 @@
     profileForm.elements.full_name.value = profile.full_name || "";
     profileForm.elements.birthday.value = profile.birthday || "";
     profileForm.elements.sex.value = profile.sex || "";
-    profileForm.elements.region.value = profile.region || "";
     profileForm.elements.phone.value = profile.phone || "";
     profileForm.elements.marketing_opt_in.checked = Boolean(profile.marketing_opt_in);
+    var locationRoot = profileForm.querySelector("[data-location-fields]");
+    if (locationRoot && window.CITTACICO_LOCATIONS) {
+      window.CITTACICO_LOCATIONS.setValues(locationRoot, { region: profile.region || "" });
+    }
   }
 
   profileForm.addEventListener("submit", async function (event) {
@@ -242,12 +193,20 @@
     say(profileMessage, "");
     busy(profileForm, true, "Saving…");
 
+    var locationRoot = profileForm.querySelector("[data-location-fields]");
+    var location = window.CITTACICO_LOCATIONS && locationRoot
+      ? window.CITTACICO_LOCATIONS.getValues(locationRoot)
+      : { country: "", region: "" };
+    var regionValue = window.CITTACICO_LOCATIONS
+      ? window.CITTACICO_LOCATIONS.formatProfileRegion(location.country, location.region)
+      : String(data.get("region") || "").trim();
+
     try {
       const saved = await backend.updateProfile({
         full_name: String(data.get("full_name") || "").trim() || null,
         birthday: String(data.get("birthday") || "") || null,
         sex: String(data.get("sex") || "") || null,
-        region: String(data.get("region") || "").trim() || null,
+        region: regionValue || null,
         phone: String(data.get("phone") || "").trim() || null,
         marketing_opt_in: profileForm.elements.marketing_opt_in.checked
       });
@@ -273,11 +232,16 @@
     if (error || !data) return;
 
     defaultAddressId = data.id;
-    ["full_name", "line1", "line2", "city", "region", "postal_code", "country"].forEach(
-      function (field) {
-        addressForm.elements[field].value = data[field] || "";
-      }
-    );
+    ["full_name", "line1", "line2", "city", "postal_code"].forEach(function (field) {
+      addressForm.elements[field].value = data[field] || "";
+    });
+    var locationRoot = addressForm.querySelector("[data-location-fields]");
+    if (locationRoot && window.CITTACICO_LOCATIONS) {
+      window.CITTACICO_LOCATIONS.setValues(locationRoot, {
+        country: data.country || "",
+        region: data.region || ""
+      });
+    }
   }
 
   addressForm.addEventListener("submit", async function (event) {
@@ -285,15 +249,22 @@
     if (!addressForm.reportValidity()) return;
 
     const data = new FormData(addressForm);
+    var locationRoot = addressForm.querySelector("[data-location-fields]");
+    var location = window.CITTACICO_LOCATIONS && locationRoot
+      ? window.CITTACICO_LOCATIONS.getValues(locationRoot)
+      : {
+          country: String(data.get("country") || "").trim(),
+          region: String(data.get("region") || "").trim()
+        };
     const record = {
       user_id: backend.getUser().id,
       full_name: String(data.get("full_name")).trim(),
       line1: String(data.get("line1")).trim(),
       line2: String(data.get("line2") || "").trim() || null,
       city: String(data.get("city")).trim(),
-      region: String(data.get("region") || "").trim() || null,
+      region: location.region || null,
       postal_code: String(data.get("postal_code") || "").trim() || null,
-      country: String(data.get("country")).trim(),
+      country: location.country,
       is_default: true
     };
 
@@ -406,11 +377,17 @@
     }
 
     if (!backend.getSession()) {
-      gateEl.hidden = false;
+      if (gateEl) gateEl.hidden = false;
+      if (dashboardEl) dashboardEl.hidden = true;
       return;
     }
 
-    dashboardEl.hidden = false;
+    if (gateEl) gateEl.hidden = true;
+    if (dashboardEl) dashboardEl.hidden = false;
+
+    page.querySelectorAll("[data-location-fields]").forEach(function (root) {
+      if (window.CITTACICO_LOCATIONS) window.CITTACICO_LOCATIONS.bind(root);
+    });
 
     const profile = backend.getProfile();
     const greeting = page.querySelector("[data-account-greeting]");

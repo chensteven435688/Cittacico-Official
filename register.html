@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      /* github-pages-base-fix */
+      (function () {
+        var h = location.hostname;
+        if (!h.endsWith("github.io")) return;
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var seg = parts[0];
+        if (seg.indexOf(".") !== -1) return;
+        var el = document.createElement("base");
+        el.setAttribute("href", "/" + seg + "/");
+        document.head.insertBefore(el, document.head.firstChild);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create an Account | CITTÀCICO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-section="house">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-dot" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="header-util">
+        <div class="header-util-inner">
+          <span class="header-tagline">New York Maison · Since 2026</span>
+          <div class="header-util-links">
+            <a href="client-services.html">Client Services</a>
+            <a href="locations.html">Locations</a>
+            <a href="contact.html">Contact</a>
+            <a class="header-util-switch" href="shop.html">Boutique</a>
+          </div>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="The House">
+        <div class="nav-cluster nav-cluster--left">
+          <div class="nav-item nav-item--house">
+            <a href="house.html" class="nav-primary">The House</a>
+          </div>
+          <div class="nav-item nav-item--archives">
+            <a href="archives.html" class="nav-primary">Archives</a>
+          </div>
+        </div>
+        <a class="logo logo--center" href="index.html">CITTÀCICO</a>
+        <div class="nav-cluster nav-cluster--right">
+          <a class="nav-simple" href="locations.html">Locations</a>
+          <a class="nav-simple" href="contact.html">Contact</a>
+          <a class="nav-shop" href="shop.html">Shop</a>
+        </div>
+        <button type="button" class="mobile-toggle" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </header>
+    <div class="mobile-overlay" aria-hidden="true">
+      <div class="mobile-overlay-inner">
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">The House</span>
+          <a href="house.html">Our story</a>
+          <a href="archives.html">Archives</a>
+        </div>
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">Services</span>
+          <a href="client-services.html">Client services</a>
+          <a href="contact.html">Contact</a>
+          <a href="locations.html">Locations</a>
+        </div>
+        <div class="mobile-nav-group">
+          <a href="shop.html" class="mobile-nav-cta">Shop</a>
+        </div>
+      </div>
+    </div>
+
+    <main data-register-page>
+      <section class="locations-hero">
+        <div class="locations-hero-inner reveal">
+          <span class="label-upper">Maison</span>
+          <h1 class="page-title" style="margin-bottom: 0">Create an Account</h1>
+          <p class="locations-lede">
+            Join the house — keep a saved bag, see your orders, and receive future news from
+            the maison.
+          </p>
+        </div>
+      </section>
+
+      <section class="page-section" style="padding-top: 0">
+        <div class="container">
+          <p class="account-loading" data-register-loading>Opening registration…</p>
+
+          <div class="account-panel account-panel--narrow" data-register-panel hidden>
+            <h2>Become a member</h2>
+            <p class="account-panel-lede">
+              So the house may address you properly, and keep your acquisitions on record.
+            </p>
+            <form class="account-form" data-signup-form novalidate>
+              <label>
+                <span>Full name</span>
+                <input type="text" name="fullName" autocomplete="name" required />
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" required />
+              </label>
+              <label>
+                <span>Password</span>
+                <input
+                  type="password"
+                  name="password"
+                  autocomplete="new-password"
+                  minlength="8"
+                  required
+                />
+                <small>At least 8 characters.</small>
+              </label>
+              <div class="account-form-row">
+                <label>
+                  <span>Date of birth</span>
+                  <input type="date" name="birthday" autocomplete="bday" />
+                </label>
+                <label>
+                  <span>Sex</span>
+                  <select name="sex">
+                    <option value="">Prefer not to say</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
+              </div>
+              <div class="account-form-row" data-location-fields data-location-profile>
+                <label>
+                  <span>Country</span>
+                  <select name="country" data-location-country></select>
+                </label>
+                <label>
+                  <span data-location-subdivision-label>State / region</span>
+                  <select name="region_select" data-location-subdivision></select>
+                  <input
+                    type="text"
+                    name="region_text"
+                    data-location-subdivision-text
+                    hidden
+                    disabled
+                  />
+                </label>
+              </div>
+              <label>
+                <span>Telephone</span>
+                <input type="tel" name="phone" autocomplete="tel" />
+              </label>
+              <label class="account-checkbox">
+                <input type="checkbox" name="marketingOptIn" value="yes" />
+                <span>Send me house correspondence and private viewings.</span>
+              </label>
+              <p class="account-message" data-signup-message hidden></p>
+              <button type="submit" class="btn-checkout">Create account</button>
+              <button type="button" class="account-link-button" data-resend-signup hidden>
+                Resend confirmation email
+              </button>
+            </form>
+            <p class="account-switch">
+              Already a member?
+              <a href="account.html">Sign in</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a class="logo" href="index.html">CITTÀCICO</a>
+          <p class="footer-tagline">
+            A New York house for fashion, objects, and fragrance—a space between luxury and
+            studio, for those who refuse to fit.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>The House</h4>
+          <ul>
+            <li><a href="house.html">Our story</a></li>
+            <li><a href="calista.html">Calista</a></li>
+            <li><a href="archives.html">Archives</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Client care</h4>
+          <ul>
+            <li><a href="client-services.html">Client services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="locations.html">Locations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Boutique</h4>
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="collections.html">All collections</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2026 Cittàcico. All rights reserved.</p>
+        <div class="footer-legal-links">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Cookie settings</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/cittacico-backend.js"></script>
+    <script src="js/cittacico-locations.js"></script>
+    <script src="main.js"></script>
+    <script src="js/cittacico-register.js"></script>
+  </body>
+</html>

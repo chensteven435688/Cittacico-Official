@@ -232,6 +232,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   var pagePath = (window.location.pathname || "").split("/").pop() || "index.html";
   var isAuthPage =
     pagePath === "account.html" ||
+    pagePath === "register.html" ||
     pagePath === "admin.html" ||
     pagePath === "payment-success.html" ||
     pagePath === "payment-failure.html";
@@ -278,7 +279,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       "and receive future news from the maison." +
       "</p>" +
       '<div class="member-modal-actions">' +
-      '<a class="btn-checkout" href="account.html">Become a member</a>' +
+      '<a class="btn-checkout" href="register.html">Become a member</a>' +
       '<a class="account-link-button" href="account.html">Sign in</a>' +
       '<button type="button" class="account-link-button" data-member-continue>Continue without joining</button>' +
       "</div>" +
@@ -875,6 +876,10 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     if (emptyEl) emptyEl.hidden = true;
     if (flowEl) flowEl.hidden = false;
 
+    main.querySelectorAll("[data-location-fields]").forEach(function (root) {
+      if (window.CITTACICO_LOCATIONS) window.CITTACICO_LOCATIONS.bind(root);
+    });
+
     /* The markup carries the no-payment wording, so only the live case
        needs rewriting. Connecting Stripe later touches nothing else. */
     if (paymentsEnabled()) {
@@ -1075,14 +1080,21 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
 
         var fd = new FormData(form);
         var email = checkoutEmail || (fd.get("email") || "").toString().trim();
+        var locationRoot = form.querySelector("[data-location-fields]");
+        var location = window.CITTACICO_LOCATIONS && locationRoot
+          ? window.CITTACICO_LOCATIONS.getValues(locationRoot)
+          : {
+              country: (fd.get("country") || "").toString(),
+              region: (fd.get("region") || "").toString()
+            };
         var shipping = {
           fullName: (fd.get("fullName") || "").toString(),
           line1: (fd.get("address1") || "").toString(),
           line2: (fd.get("address2") || "").toString(),
           city: (fd.get("city") || "").toString(),
-          region: (fd.get("region") || "").toString(),
+          region: location.region || "",
           postalCode: (fd.get("postal") || "").toString(),
-          country: (fd.get("country") || "").toString()
+          country: location.country || ""
         };
 
         if (!window.CITTACICO || !window.CITTACICO.isOnline()) {
