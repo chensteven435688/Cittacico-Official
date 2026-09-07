@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      /* github-pages-base-fix */
+      (function () {
+        var h = location.hostname;
+        if (!h.endsWith("github.io")) return;
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var seg = parts[0];
+        if (seg.indexOf(".") !== -1) return;
+        var el = document.createElement("base");
+        el.setAttribute("href", "/" + seg + "/");
+        document.head.insertBefore(el, document.head.firstChild);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calista | CITTÀCICO</title>
+    <meta
+      name="description"
+      content="Calista—a Cittàcico series in sepia and silver. Leather, chain, and a face held between hands: a study of possession and refusal."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-section="house">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-dot" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="header-util">
+        <div class="header-util-inner">
+          <span class="header-tagline">New York Maison · Since 2026</span>
+          <div class="header-util-links">
+            <a href="client-services.html">Client Services</a>
+            <a href="locations.html">Locations</a>
+            <a href="contact.html">Contact</a>
+            <a class="header-util-switch" href="shop.html">Boutique</a>
+          </div>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="The House">
+        <div class="nav-cluster nav-cluster--left">
+          <div class="nav-item nav-item--house has-mega">
+            <a href="house.html" class="nav-primary">The House</a>
+          </div>
+          <div class="nav-item nav-item--archives has-mega">
+            <a href="archives.html" class="nav-primary">Archives</a>
+          </div>
+        </div>
+        <a class="logo logo--center" href="index.html">CITTÀCICO</a>
+        <div class="nav-cluster nav-cluster--right">
+          <a class="nav-simple" href="locations.html">Locations</a>
+          <a class="nav-simple" href="contact.html">Contact</a>
+          <a class="nav-shop" href="shop.html">Shop</a>
+        </div>
+        <button type="button" class="mobile-toggle" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+      <div class="mega-panel mega-panel--house" role="region" aria-label="The House">
+        <div class="mega-inner">
+          <div class="mega-col">
+            <p class="mega-col-label">Maison</p>
+            <div class="mega-links">
+              <a href="house.html">Our story<span class="hint">The house in full</span></a>
+              <a href="house.html#heritage">Heritage<span class="hint">Città di Circo</span></a>
+              <a href="house.html#craft">Craft<span class="hint">Construction &amp; collapse</span></a>
+              <a href="house.html#values">Values<span class="hint">What we stand for</span></a>
+            </div>
+          </div>
+          <div class="mega-col">
+            <p class="mega-col-label">Services</p>
+            <div class="mega-links">
+              <a href="client-services.html">Client services<span class="hint">Care &amp; appointments</span></a>
+              <a href="contact.html">Contact the house<span class="hint">Messages &amp; enquiries</span></a>
+              <a href="locations.html">Locations<span class="hint">Boutiques &amp; studios</span></a>
+            </div>
+          </div>
+          <a class="mega-feature" href="house.html#heritage">
+            <span class="mega-feature-kicker">Heritage</span>
+            <span class="mega-feature-title">Born from Città di Circo</span>
+            <p class="mega-feature-desc">
+              A provisional city of tents and performance—heritage that is built, undone, and
+              remade with every collection.
+            </p>
+          </a>
+        </div>
+      </div>
+      <div class="mega-panel mega-panel--archives" role="region" aria-label="Archives">
+        <div class="mega-inner">
+          <div class="mega-col">
+            <p class="mega-col-label">Editorial</p>
+            <div class="mega-links">
+              <a href="calista.html">Calista<span class="hint">The series</span></a>
+              <a href="archives.html">Archives<span class="hint">Campaigns &amp; stories</span></a>
+              <a href="house.html#manifesto">Manifesto<span class="hint">Those who refuse to fit</span></a>
+              <a href="house.html#vision">Vision<span class="hint">Without forced resolution</span></a>
+            </div>
+          </div>
+          <div class="mega-col">
+            <p class="mega-col-label">Discover</p>
+            <div class="mega-links">
+              <a href="shop.html">Shop<span class="hint">Online boutique</span></a>
+              <a href="collections.html">Collections<span class="hint">Fashion, objets, scent</span></a>
+            </div>
+          </div>
+          <a class="mega-feature" href="calista.html">
+            <span class="mega-feature-kicker">The series</span>
+            <span class="mega-feature-title">Calista</span>
+            <p class="mega-feature-desc">
+              Leather, chain, and a face held between hands—a study of possession and refusal.
+            </p>
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="mobile-overlay" aria-hidden="true">
+      <div class="mobile-overlay-inner">
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">The House</span>
+          <div class="mobile-sub">
+            <a href="house.html">Our story</a>
+            <a href="house.html#heritage">Heritage</a>
+            <a href="house.html#craft">Craft</a>
+            <a href="house.html#values">Values</a>
+          </div>
+        </div>
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">Editorial</span>
+          <a href="calista.html">Calista</a>
+          <a href="archives.html">Archives &amp; campaigns</a>
+        </div>
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">Services</span>
+          <a href="client-services.html">Client services</a>
+          <a href="contact.html">Contact</a>
+          <a href="locations.html">Locations</a>
+        </div>
+        <div class="mobile-nav-group">
+          <a href="shop.html" class="mobile-nav-cta">Shop</a>
+        </div>
+      </div>
+    </div>
+
+    <main class="series">
+      <section class="series-hero">
+        <figure class="series-hero-media">
+          <picture>
+            <source srcset="images/calista/cover.webp" type="image/webp" />
+            <img
+              src="images/calista/cover.jpg"
+              alt="Calista — the model's face framed by black leather gloves"
+              width="2200"
+              height="2934"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+        <div class="series-hero-overlay" aria-hidden="true"></div>
+        <div class="series-hero-inner">
+          <span class="series-hero-kicker">The Series</span>
+          <h1 class="series-hero-title">Calista</h1>
+          <p class="series-hero-lede">
+            A study of possession and refusal—leather, chain, and a face held between hands.
+          </p>
+          <dl class="series-hero-meta">
+            <div>
+              <dt>Series</dt>
+              <dd>Universe</dd>
+            </div>
+            <div>
+              <dt>Plates</dt>
+              <dd>Eleven</dd>
+            </div>
+            <div>
+              <dt>Process</dt>
+              <dd>Sepia &amp; silver</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="series-hero-scroll" aria-hidden="true">
+          <span class="series-hero-scroll-bar"></span>
+        </div>
+      </section>
+
+      <section class="series-statement reveal" aria-labelledby="series-statement-title">
+        <div class="container">
+          <h2 id="series-statement-title" class="series-statement-text">
+            The hands arrive before the face. What they hold is not a woman but the idea of one—
+            <em>and she declines it.</em>
+          </h2>
+          <p class="series-statement-body">
+            Calista was shot against a painted ground that refuses to sit still: torn, scrawled,
+            unresolved. Against it, the figure is composed entirely of surfaces that resist
+            touch—patent leather, chain, lacquer. The series moves from the close grip of the
+            opening plates to full-length compositions where a second, masked presence enters the
+            frame. Nothing is decorative. Every hand is placed.
+          </p>
+        </div>
+      </section>
+
+      <section class="series-plates" aria-label="Plates">
+        <!-- Plate 1–2: the grip -->
+        <div class="series-pair reveal">
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/plate-01.webp" type="image/webp" />
+              <img
+                src="images/calista/plate-01.jpg"
+                alt="Calista, plate one — gloved hands framing the face"
+                width="1600"
+                height="2134"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">I</span> The grip</figcaption>
+          </figure>
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/plate-02.webp" type="image/webp" />
+              <img
+                src="images/calista/plate-02.jpg"
+                alt="Calista, plate two — close study of the face between leather gloves"
+                width="1600"
+                height="2134"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">II</span> Held</figcaption>
+          </figure>
+        </div>
+
+        <!-- Film interlude -->
+        <figure class="series-wide reveal">
+          <picture>
+            <source srcset="images/calista/film-03.webp" type="image/webp" />
+            <img
+              src="images/calista/film-03.jpg"
+              alt="Calista, film frame — black and white close study"
+              width="1400"
+              height="1439"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <figcaption>
+            <span class="series-plate-num">Film</span> Silver frame, printed from the original
+            negative
+          </figcaption>
+        </figure>
+
+        <!-- Plates 3–4: the second figure -->
+        <div class="series-pair reveal">
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/plate-03.webp" type="image/webp" />
+              <img
+                src="images/calista/plate-03.jpg"
+                alt="Calista, plate three — two figures against a painted ground"
+                width="1600"
+                height="2134"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">III</span> The second presence</figcaption>
+          </figure>
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/plate-04.webp" type="image/webp" />
+              <img
+                src="images/calista/plate-04.jpg"
+                alt="Calista, plate four — the masked figure turns away"
+                width="1600"
+                height="2134"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">IV</span> Turned</figcaption>
+          </figure>
+        </div>
+
+        <figure class="series-single reveal">
+          <picture>
+            <source srcset="images/calista/plate-07.webp" type="image/webp" />
+            <img
+              src="images/calista/plate-07.jpg"
+              alt="Calista, plate five — full-length composition with mannequin forms"
+              width="1600"
+              height="2134"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <figcaption>
+            <span class="series-plate-num">V</span> The workroom, with forms
+          </figcaption>
+        </figure>
+
+        <div class="series-pair reveal">
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/plate-05.webp" type="image/webp" />
+              <img
+                src="images/calista/plate-05.jpg"
+                alt="Calista, plate six — standing pair, hand at the waist"
+                width="1600"
+                height="2134"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">VI</span> Hand at the waist</figcaption>
+          </figure>
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/plate-06.webp" type="image/webp" />
+              <img
+                src="images/calista/plate-06.jpg"
+                alt="Calista, plate seven — the raised arm"
+                width="1600"
+                height="2134"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">VII</span> The raised arm</figcaption>
+          </figure>
+        </div>
+
+        <div class="series-pair reveal">
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/film-01.webp" type="image/webp" />
+              <img
+                src="images/calista/film-01.jpg"
+                alt="Calista, film frame — the figure against the painted ground in black and white"
+                width="1400"
+                height="1367"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">Film</span> Against the ground</figcaption>
+          </figure>
+          <figure class="series-plate">
+            <picture>
+              <source srcset="images/calista/film-02.webp" type="image/webp" />
+              <img
+                src="images/calista/film-02.jpg"
+                alt="Calista, film frame — the full workroom scene in black and white"
+                width="1400"
+                height="1400"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption><span class="series-plate-num">Film</span> The full room</figcaption>
+          </figure>
+        </div>
+
+        <figure class="series-single reveal">
+          <picture>
+            <source srcset="images/calista/plate-08.webp" type="image/webp" />
+            <img
+              src="images/calista/plate-08.jpg"
+              alt="Calista, closing plate — the model looks directly to camera"
+              width="1600"
+              height="2134"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <figcaption><span class="series-plate-num">VIII</span> To camera</figcaption>
+        </figure>
+      </section>
+
+      <section class="series-credits reveal" aria-labelledby="series-credits-title">
+        <div class="container">
+          <h2 id="series-credits-title" class="series-credits-head">Calista</h2>
+          <dl class="series-credits-list">
+            <div>
+              <dt>House</dt>
+              <dd>Cittàcico</dd>
+            </div>
+            <div>
+              <dt>Series</dt>
+              <dd>Universe</dd>
+            </div>
+            <div>
+              <dt>Format</dt>
+              <dd>Digital &amp; film</dd>
+            </div>
+            <div>
+              <dt>Location</dt>
+              <dd>New York</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="series-next reveal" aria-labelledby="series-next-title">
+        <div class="container series-next-inner">
+          <div>
+            <span class="section-kicker">Continue</span>
+            <h2 id="series-next-title">The house behind the frame.</h2>
+            <p>
+              Calista is one reading of the same argument the house makes in cloth—that the parts
+              of a person which do not fit are the parts worth keeping.
+            </p>
+          </div>
+          <div class="series-next-links">
+            <a class="section-pill-link" href="house.html">Read the house</a>
+            <a class="link-gold" href="archives.html">All archives</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a class="logo" href="index.html">CITTÀCICO</a>
+          <p class="footer-tagline">
+            A New York house for fashion, objects, and fragrance—a space between luxury and
+            studio, for those who refuse to fit.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>The House</h4>
+          <ul>
+            <li><a href="house.html">Our story</a></li>
+            <li><a href="house.html#heritage">Heritage</a></li>
+            <li><a href="house.html#craft">Craft</a></li>
+            <li><a href="house.html#values">Values</a></li>
+            <li><a href="calista.html">Calista</a></li>
+            <li><a href="archives.html">Archives</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Client care</h4>
+          <ul>
+            <li><a href="client-services.html">Client services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="locations.html">Locations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Boutique</h4>
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="collections.html">All collections</a></li>
+            <li><a href="collection-fashion.html">Fashion</a></li>
+            <li><a href="collection-accessories.html">Accessories</a></li>
+            <li><a href="collection-fragrance.html">Fragrance</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/cittacico?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==">Instagram</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Pinterest</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2026 Cittàcico. All rights reserved.</p>
+        <div class="footer-legal-links">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Cookie settings</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>
