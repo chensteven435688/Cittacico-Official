@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      /* github-pages-base-fix */
+      (function () {
+        var h = location.hostname;
+        if (!h.endsWith("github.io")) return;
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var seg = parts[0];
+        if (seg.indexOf(".") !== -1) return;
+        var el = document.createElement("base");
+        el.setAttribute("href", "/" + seg + "/");
+        document.head.insertBefore(el, document.head.firstChild);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The House | CITTÀCICO</title>
+    <meta
+      name="description"
+      content="The house of Cittàcico—born of Città di Circo. Heritage, craft, vision, and the values behind a New York maison for those who refuse to fit."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-section="house">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-dot" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="header-util">
+        <div class="header-util-inner">
+          <span class="header-tagline">New York Maison · Since 2026</span>
+          <div class="header-util-links">
+            <a href="client-services.html">Client Services</a>
+            <a href="locations.html">Locations</a>
+            <a href="contact.html">Contact</a>
+            <a class="header-util-switch" href="shop.html">Boutique</a>
+          </div>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="The House">
+        <div class="nav-cluster nav-cluster--left">
+          <div class="nav-item nav-item--house has-mega">
+            <a href="house.html" class="nav-primary">The House</a>
+          </div>
+          <div class="nav-item nav-item--archives has-mega">
+            <a href="archives.html" class="nav-primary">Archives</a>
+          </div>
+        </div>
+        <a class="logo logo--center" href="index.html">CITTÀCICO</a>
+        <div class="nav-cluster nav-cluster--right">
+          <a class="nav-simple" href="locations.html">Locations</a>
+          <a class="nav-simple" href="contact.html">Contact</a>
+          <a class="nav-shop" href="shop.html">Shop</a>
+        </div>
+        <button type="button" class="mobile-toggle" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+      <div class="mega-panel mega-panel--house" role="region" aria-label="The House">
+        <div class="mega-inner">
+          <div class="mega-col">
+            <p class="mega-col-label">Maison</p>
+            <div class="mega-links">
+              <a href="house.html">Our story<span class="hint">The house in full</span></a>
+              <a href="house.html#heritage">Heritage<span class="hint">Città di Circo</span></a>
+              <a href="house.html#craft">Craft<span class="hint">Construction &amp; collapse</span></a>
+              <a href="house.html#values">Values<span class="hint">What we stand for</span></a>
+            </div>
+          </div>
+          <div class="mega-col">
+            <p class="mega-col-label">Services</p>
+            <div class="mega-links">
+              <a href="client-services.html">Client services<span class="hint">Care &amp; appointments</span></a>
+              <a href="contact.html">Contact the house<span class="hint">Messages &amp; enquiries</span></a>
+              <a href="locations.html">Locations<span class="hint">Boutiques &amp; studios</span></a>
+            </div>
+          </div>
+          <a class="mega-feature" href="house.html#heritage">
+            <span class="mega-feature-kicker">Heritage</span>
+            <span class="mega-feature-title">Born from Città di Circo</span>
+            <p class="mega-feature-desc">
+              A provisional city of tents and performance—heritage that is built, undone, and
+              remade with every collection.
+            </p>
+          </a>
+        </div>
+      </div>
+      <div class="mega-panel mega-panel--archives" role="region" aria-label="Archives">
+        <div class="mega-inner">
+          <div class="mega-col">
+            <p class="mega-col-label">Editorial</p>
+            <div class="mega-links">
+              <a href="archives.html">Archives<span class="hint">Campaigns &amp; stories</span></a>
+              <a href="house.html#manifesto">Manifesto<span class="hint">Those who refuse to fit</span></a>
+              <a href="house.html#vision">Vision<span class="hint">Without forced resolution</span></a>
+            </div>
+          </div>
+          <div class="mega-col">
+            <p class="mega-col-label">Discover</p>
+            <div class="mega-links">
+              <a href="shop.html">Shop<span class="hint">Online boutique</span></a>
+              <a href="collections.html">Collections<span class="hint">Fashion, objets, scent</span></a>
+            </div>
+          </div>
+          <a class="mega-feature" href="archives.html">
+            <span class="mega-feature-kicker">Campaign story</span>
+            <span class="mega-feature-title">Motion as argument</span>
+            <p class="mega-feature-desc">
+              Each campaign treats the body as a site of tension—between belonging and refusal,
+              polish and unease.
+            </p>
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="mobile-overlay" aria-hidden="true">
+      <div class="mobile-overlay-inner">
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">The House</span>
+          <div class="mobile-sub">
+            <a href="house.html">Our story</a>
+            <a href="house.html#heritage">Heritage</a>
+            <a href="house.html#craft">Craft</a>
+            <a href="house.html#values">Values</a>
+          </div>
+        </div>
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">Editorial</span>
+          <a href="archives.html">Archives &amp; campaigns</a>
+        </div>
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">Services</span>
+          <a href="client-services.html">Client services</a>
+          <a href="contact.html">Contact</a>
+          <a href="locations.html">Locations</a>
+        </div>
+        <div class="mobile-nav-group">
+          <a href="shop.html" class="mobile-nav-cta">Shop</a>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <section class="house-hero">
+        <div class="house-hero-inner reveal">
+          <span class="label-upper">The House</span>
+          <h1 class="page-title house-hero-title">Those who refuse to fit.</h1>
+          <p class="house-hero-lede">
+            Cittàcico is a New York maison working between luxury and studio—a house that treats
+            clothing, objects, and scent as one continuous argument about who a person is allowed
+            to be.
+          </p>
+          <div class="house-hero-meta">
+            <span>New York</span>
+            <span>Founded 2026</span>
+            <span>Fashion · Objets · Fragrance</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="house-manifesto reveal" id="manifesto" aria-labelledby="manifesto-title">
+        <div class="container">
+          <span class="section-kicker">Manifesto</span>
+          <h2 id="manifesto-title" class="house-manifesto-statement">
+            What you think is “you” is often what society allows you to be.
+            <em>Break that rule.</em>
+          </h2>
+          <p class="house-manifesto-body">
+            The house does not design for a customer profile. It designs for the moment a person
+            stops negotiating with expectation. Every silhouette, every object, every note is made
+            to hold contradiction rather than resolve it—because the parts of a person that do not
+            fit are usually the parts worth keeping.
+          </p>
+        </div>
+      </section>
+
+      <section class="page-section" style="padding-top: 0">
+        <div class="container">
+          <div class="story-block reveal" id="heritage">
+            <div class="story-text">
+              <span class="label-upper">Heritage</span>
+              <h2>A temporary city</h2>
+              <p>
+                Cittàcico takes its name from <em>Città di Circo</em>—a self-funded festival in
+                Italy where contemporary circus companies built a provisional “city of tents,” a
+                shared stage for performance, imagination, and collective making. That spirit
+                endures: a space where independent voices gather, where those often cast aside are
+                given presence, and where heritage is not a fixed monument but something built,
+                dismantled, and rebuilt through every collection and every person who enters.
+              </p>
+              <blockquote class="story-quote">
+                I do, I undo, I redo.
+                <cite>Louise Bourgeois</cite>
+              </blockquote>
+            </div>
+            <div class="story-visual">
+              <div class="story-visual-inner">
+                <span class="story-visual-letter" aria-hidden="true">C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="editorial-break editorial-break--forest reveal"
+        aria-labelledby="editorial-forest-title"
+      >
+        <div class="editorial-break-media" aria-hidden="true"></div>
+        <div class="editorial-break-overlay"></div>
+        <div class="editorial-break-content">
+          <span class="section-kicker">Editorial Moment</span>
+          <h2 id="editorial-forest-title">Motion as argument.</h2>
+          <p>
+            Each campaign treats the body as a site of tension—between belonging and refusal,
+            polish and unease. The frame is deliberate: nothing decorative, nothing accidental.
+          </p>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="container">
+          <div class="story-block reverse reveal" id="craft">
+            <div class="story-text">
+              <span class="label-upper">Craft</span>
+              <h2>Construction and deconstruction</h2>
+              <p>
+                Craft at Cittàcico is held in tension—between structure and collapse, precision
+                and imperfection. Materials are chosen and questioned; forms are designed and
+                challenged. Technique becomes its own language, and every detail exists with
+                intention, refusing empty decoration in favor of meaning you can feel in the hand
+                and on the body.
+              </p>
+            </div>
+            <div class="story-visual">
+              <div class="story-visual-inner">
+                <span class="story-visual-letter" aria-hidden="true">A</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-block reveal" id="vision">
+            <div class="story-text">
+              <span class="label-upper">Vision</span>
+              <h2>Without forced resolution</h2>
+              <p>
+                The house imagines a world where identity is no longer confined by expectation. It
+                does not seek to label the individual, but to widen the field of expression—so
+                contradiction, discomfort, and emotion can coexist without being smoothed away.
+                Cittàcico does not chase timelessness as a slogan; it intensifies experience, and
+                treats what is called “unfitting” as the ground for something essential.
+              </p>
+            </div>
+            <div class="story-visual">
+              <div class="story-visual-inner">
+                <span class="story-visual-letter" aria-hidden="true">V</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="editorial-break editorial-break--studio reveal"
+        aria-labelledby="editorial-studio-title"
+      >
+        <div class="editorial-break-media" aria-hidden="true"></div>
+        <div class="editorial-break-overlay"></div>
+        <div class="editorial-break-content editorial-break-content--right">
+          <span class="section-kicker">Campaign Story</span>
+          <h2 id="editorial-studio-title">Between collections, a breath.</h2>
+          <p>
+            Pauses in the sequence mirror how the house works—construction, deconstruction, then
+            return. Light, fabric, and gesture carry as much meaning as the objects themselves.
+          </p>
+        </div>
+      </section>
+
+      <section class="page-section" id="values">
+        <div class="container">
+          <div class="reveal">
+            <div class="values-head">
+              <span class="label-upper">Our Values</span>
+              <h2 class="page-title" style="margin-bottom: 0">What We Stand For</h2>
+            </div>
+            <div class="values-grid">
+              <div class="value-cell">
+                <h3>Unfitting</h3>
+                <p>
+                  The brand rests on a willingness to be out of step—to question the value of
+                  “normal,” and to grant dignity to what society often marginalizes.
+                </p>
+              </div>
+              <div class="value-cell">
+                <h3>Intention</h3>
+                <p>
+                  Nothing is random; nothing is without purpose. Each study, object, and note
+                  exists to expand feeling and behavior to their fullest, most honest pitch.
+                </p>
+              </div>
+              <div class="value-cell">
+                <h3>Emotion, extended</h3>
+                <p>
+                  Darkness, discomfort, and irony are not dismissed—they are held, reworked, and
+                  allowed to inform what comes next.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="house-universes reveal" aria-labelledby="house-universes-title">
+        <div class="container">
+          <div class="home-grid-head home-grid-head--center">
+            <span class="section-kicker">Three Universes</span>
+            <h2 id="house-universes-title">One narrative, three languages</h2>
+            <p class="section-intro">
+              Fashion, objects, and fragrance are not separate lines but three ways of saying the
+              same thing—through the body, through the hand, and through memory.
+            </p>
+          </div>
+          <div class="house-universe-grid">
+            <article class="house-universe">
+              <span class="house-universe-letter" aria-hidden="true">F</span>
+              <h3>Fashion</h3>
+              <p>Reconstruct the body into something unapologetically its own.</p>
+            </article>
+            <article class="house-universe">
+              <span class="house-universe-letter" aria-hidden="true">A</span>
+              <h3>Accessories</h3>
+              <p>Objects of intention—designed not to follow, but to expose and redefine.</p>
+            </article>
+            <article class="house-universe">
+              <span class="house-universe-letter" aria-hidden="true">P</span>
+              <h3>Fragrance</h3>
+              <p>
+                Olfactory signatures—lingering between memory, absence, desire, and psychological
+                preference.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="house-cross reveal" aria-labelledby="house-cross-title">
+        <div class="container house-cross-inner">
+          <div class="house-cross-text">
+            <span class="section-kicker">Continue</span>
+            <h2 id="house-cross-title">Read the house, then wear it.</h2>
+            <p>
+              The boutique carries the current season—ready-to-wear, leather goods, and parfums de
+              maison, each traceable to the thinking on this page.
+            </p>
+          </div>
+          <div class="house-cross-links">
+            <a class="section-pill-link" href="shop.html">Enter the boutique</a>
+            <a class="link-gold" href="archives.html">View the archives</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-maison reveal" aria-label="Explore the house">
+        <div class="home-maison-inner">
+          <div class="home-maison-block">
+            <h3>The House</h3>
+            <ul>
+              <li><a href="house.html#manifesto">Manifesto<span class="hint">Statement</span></a></li>
+              <li><a href="house.html#heritage">Heritage<span class="hint">Origins</span></a></li>
+              <li><a href="house.html#craft">Craft<span class="hint">Method</span></a></li>
+              <li><a href="house.html#values">Values<span class="hint">Principles</span></a></li>
+            </ul>
+          </div>
+          <div class="home-maison-block">
+            <h3>Editorial</h3>
+            <ul>
+              <li><a href="archives.html">Archives<span class="hint">Campaigns</span></a></li>
+            </ul>
+          </div>
+          <div class="home-maison-block">
+            <h3>Client care</h3>
+            <ul>
+              <li><a href="client-services.html">Client services<span class="hint">Care</span></a></li>
+              <li><a href="contact.html">Contact<span class="hint">Enquiries</span></a></li>
+              <li><a href="locations.html">Locations<span class="hint">Studios</span></a></li>
+            </ul>
+          </div>
+          <div class="home-maison-block">
+            <h3>Follow</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://www.instagram.com/cittacico?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw=="
+                  >Instagram</a
+                >
+              </li>
+              <li><a href="#">Pinterest</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <div class="marquee-wrap" aria-hidden="true">
+        <div class="marquee-inner">
+          <span class="marquee-text"
+            >CITTÀCICO — CITTÀCICO — CITTÀCICO — CITTÀCICO — CITTÀCICO — CITTÀCICO — </span
+          ><span class="marquee-text"
+            >CITTÀCICO — CITTÀCICO — CITTÀCICO — CITTÀCICO — CITTÀCICO — CITTÀCICO — </span
+          >
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a class="logo" href="index.html">CITTÀCICO</a>
+          <p class="footer-tagline">
+            A New York house for fashion, objects, and fragrance—a space between luxury and
+            studio, for those who refuse to fit.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>The House</h4>
+          <ul>
+            <li><a href="house.html">Our story</a></li>
+            <li><a href="house.html#heritage">Heritage</a></li>
+            <li><a href="house.html#craft">Craft</a></li>
+            <li><a href="house.html#values">Values</a></li>
+            <li><a href="archives.html">Archives</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Client care</h4>
+          <ul>
+            <li><a href="client-services.html">Client services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="locations.html">Locations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Boutique</h4>
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="collections.html">All collections</a></li>
+            <li><a href="collection-fashion.html">Fashion</a></li>
+            <li><a href="collection-accessories.html">Accessories</a></li>
+            <li><a href="collection-fragrance.html">Fragrance</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/cittacico?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==">Instagram</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Pinterest</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2026 Cittàcico. All rights reserved.</p>
+        <div class="footer-legal-links">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Cookie settings</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -224,6 +224,8 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   var products = window.CITTACICO_PRODUCTS || [];
   var CART_KEY = "cittacico-cart-v1";
   var ORDER_KEY = "cittacico-last-order";
+  /* The bag belongs to the shopping section only; the gateway and the house pages omit it. */
+  var isShopSection = document.body.getAttribute("data-section") === "shop";
 
   function formatPrice(value) {
     return new Intl.NumberFormat("en-US", {
@@ -600,9 +602,11 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
 
   /* Header scroll state */
   var header = document.querySelector(".site-header");
-  ensureBagUi();
-  updateBagCount();
-  renderCartDrawer();
+  if (isShopSection) {
+    ensureBagUi();
+    updateBagCount();
+    renderCartDrawer();
+  }
 
   function updateHeader() {
     if (!header) return;

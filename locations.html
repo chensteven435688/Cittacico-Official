@@ -26,7 +26,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-section="house">
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="custom-cursor custom-cursor-dot" aria-hidden="true"></div>
     <div class="custom-cursor custom-cursor-ring" aria-hidden="true"></div>
@@ -38,21 +38,23 @@
           <div class="header-util-links">
             <a href="client-services.html">Client Services</a>
             <a href="locations.html">Locations</a>
+            <a href="contact.html">Contact</a>
+            <a class="header-util-switch" href="shop.html">Boutique</a>
           </div>
         </div>
       </div>
-      <nav class="site-nav" aria-label="Primary">
+      <nav class="site-nav" aria-label="The House">
         <div class="nav-cluster nav-cluster--left">
-          <div class="nav-item nav-item--collections has-mega">
-            <a href="collections.html" class="nav-primary">Collections</a>
-          </div>
           <div class="nav-item nav-item--house has-mega">
-            <a href="about.html" class="nav-primary">The House</a>
+            <a href="house.html" class="nav-primary">The House</a>
+          </div>
+          <div class="nav-item nav-item--archives has-mega">
+            <a href="archives.html" class="nav-primary">Archives</a>
           </div>
         </div>
         <a class="logo logo--center" href="index.html">CITTÀCICO</a>
         <div class="nav-cluster nav-cluster--right">
-          <a class="nav-simple" href="archives.html">Archives</a>
+          <a class="nav-simple" href="locations.html">Locations</a>
           <a class="nav-simple" href="contact.html">Contact</a>
           <a class="nav-shop" href="shop.html">Shop</a>
         </div>
@@ -60,46 +62,15 @@
           <span></span><span></span><span></span>
         </button>
       </nav>
-      <div class="mega-panel mega-panel--collections" role="region" aria-label="Collections">
-        <div class="mega-inner">
-          <div class="mega-col">
-            <p class="mega-col-label">Universes</p>
-            <div class="mega-links">
-              <a href="collection-fashion.html"
-                >Fashion<span class="hint">Ready-to-wear</span></a
-              >
-              <a href="collection-accessories.html"
-                >Accessories<span class="hint">Leather goods &amp; objects</span></a
-              >
-              <a href="collection-fragrance.html"
-                >Fragrance<span class="hint">Parfums de maison</span></a
-              >
-            </div>
-          </div>
-          <div class="mega-col">
-            <p class="mega-col-label">Discover</p>
-            <div class="mega-links">
-              <a href="shop.html">Shop<span class="hint">Online boutique</span></a>
-              <a href="collections.html">All collections</a>
-              <a href="archives.html">Campaigns &amp; stories</a>
-            </div>
-          </div>
-          <a class="mega-feature" href="collections.html">
-            <span class="mega-feature-kicker">The world of Cittàcico</span>
-            <span class="mega-feature-title">Those who refuse to fit.</span>
-            <p class="mega-feature-desc">
-              Silhouettes, objets, and scent as one narrative—between body, hand, and memory.
-            </p>
-          </a>
-        </div>
-      </div>
       <div class="mega-panel mega-panel--house" role="region" aria-label="The House">
         <div class="mega-inner">
           <div class="mega-col">
             <p class="mega-col-label">Maison</p>
             <div class="mega-links">
-              <a href="about.html">Our story</a>
-              <a href="archives.html">Archives &amp; campaigns</a>
+              <a href="house.html">Our story<span class="hint">The house in full</span></a>
+              <a href="house.html#heritage">Heritage<span class="hint">Città di Circo</span></a>
+              <a href="house.html#craft">Craft<span class="hint">Construction &amp; collapse</span></a>
+              <a href="house.html#values">Values<span class="hint">What we stand for</span></a>
             </div>
           </div>
           <div class="mega-col">
@@ -110,7 +81,7 @@
               <a href="locations.html">Locations<span class="hint">Boutiques &amp; studios</span></a>
             </div>
           </div>
-          <a class="mega-feature" href="about.html">
+          <a class="mega-feature" href="house.html#heritage">
             <span class="mega-feature-kicker">Heritage</span>
             <span class="mega-feature-title">Born from Città di Circo</span>
             <p class="mega-feature-desc">
@@ -120,22 +91,48 @@
           </a>
         </div>
       </div>
+      <div class="mega-panel mega-panel--archives" role="region" aria-label="Archives">
+        <div class="mega-inner">
+          <div class="mega-col">
+            <p class="mega-col-label">Editorial</p>
+            <div class="mega-links">
+              <a href="archives.html">Archives<span class="hint">Campaigns &amp; stories</span></a>
+              <a href="house.html#manifesto">Manifesto<span class="hint">Those who refuse to fit</span></a>
+              <a href="house.html#vision">Vision<span class="hint">Without forced resolution</span></a>
+            </div>
+          </div>
+          <div class="mega-col">
+            <p class="mega-col-label">Discover</p>
+            <div class="mega-links">
+              <a href="shop.html">Shop<span class="hint">Online boutique</span></a>
+              <a href="collections.html">Collections<span class="hint">Fashion, objets, scent</span></a>
+            </div>
+          </div>
+          <a class="mega-feature" href="archives.html">
+            <span class="mega-feature-kicker">Campaign story</span>
+            <span class="mega-feature-title">Motion as argument</span>
+            <p class="mega-feature-desc">
+              Each campaign treats the body as a site of tension—between belonging and refusal,
+              polish and unease.
+            </p>
+          </a>
+        </div>
+      </div>
     </header>
     <div class="mobile-overlay" aria-hidden="true">
       <div class="mobile-overlay-inner">
         <div class="mobile-nav-group">
-          <span class="mobile-nav-label">Collections</span>
+          <span class="mobile-nav-label">The House</span>
           <div class="mobile-sub">
-            <a href="collections.html">All collections</a>
-            <a href="collection-fashion.html">Fashion</a>
-            <a href="collection-accessories.html">Accessories</a>
-            <a href="collection-fragrance.html">Fragrance</a>
+            <a href="house.html">Our story</a>
+            <a href="house.html#heritage">Heritage</a>
+            <a href="house.html#craft">Craft</a>
+            <a href="house.html#values">Values</a>
           </div>
         </div>
         <div class="mobile-nav-group">
-          <span class="mobile-nav-label">The House</span>
-          <a href="about.html">Our story</a>
-          <a href="archives.html">Archives</a>
+          <span class="mobile-nav-label">Editorial</span>
+          <a href="archives.html">Archives &amp; campaigns</a>
         </div>
         <div class="mobile-nav-group">
           <span class="mobile-nav-label">Services</span>
@@ -211,23 +208,31 @@
           </p>
         </div>
         <div class="footer-col">
-          <h4>Collections</h4>
+          <h4>The House</h4>
+          <ul>
+            <li><a href="house.html">Our story</a></li>
+            <li><a href="house.html#heritage">Heritage</a></li>
+            <li><a href="house.html#craft">Craft</a></li>
+            <li><a href="house.html#values">Values</a></li>
+            <li><a href="archives.html">Archives</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Client care</h4>
+          <ul>
+            <li><a href="client-services.html">Client services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="locations.html">Locations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Boutique</h4>
           <ul>
             <li><a href="shop.html">Shop</a></li>
             <li><a href="collections.html">All collections</a></li>
             <li><a href="collection-fashion.html">Fashion</a></li>
             <li><a href="collection-accessories.html">Accessories</a></li>
             <li><a href="collection-fragrance.html">Fragrance</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>The House</h4>
-          <ul>
-            <li><a href="about.html">About</a></li>
-            <li><a href="archives.html">Archives</a></li>
-            <li><a href="locations.html">Locations</a></li>
-            <li><a href="client-services.html">Client services</a></li>
-            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">

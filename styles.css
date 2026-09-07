@@ -2128,6 +2128,9 @@ body.bag-open {
   text-decoration: none;
   transition: opacity 0.25s, transform 0.2s;
 }
+a.btn-checkout-primary:any-link {
+  color: var(--background);
+}
 .btn-checkout-primary:hover {
   opacity: 0.9;
 }
@@ -3080,5 +3083,540 @@ textarea.form-field {
 @media (min-width: 768px) {
   .contact-form-col {
     padding-top: 6rem;
+  }
+}
+
+/* ==========================================================================
+   Two-section architecture: gateway, cross-section nav, house pages
+   ========================================================================== */
+
+/* Mega panels for the section-specific nav items */
+.site-header:has(.nav-item--boutique:hover) .mega-panel--boutique,
+.site-header:has(.nav-item--boutique:focus-within) .mega-panel--boutique,
+.site-header:has(.mega-panel--boutique:hover) .mega-panel--boutique,
+.site-header:has(.nav-item--boutique.is-mega-pinned) .mega-panel--boutique,
+.site-header:has(.nav-item--archives:hover) .mega-panel--archives,
+.site-header:has(.nav-item--archives:focus-within) .mega-panel--archives,
+.site-header:has(.mega-panel--archives:hover) .mega-panel--archives,
+.site-header:has(.nav-item--archives.is-mega-pinned) .mega-panel--archives {
+  display: block;
+}
+.site-header:has(.mega-panel--boutique:hover) .nav-item--boutique .nav-primary,
+.site-header:has(.mega-panel--boutique:focus-within) .nav-item--boutique .nav-primary,
+.site-header:has(.nav-item--boutique.is-mega-pinned) .nav-item--boutique .nav-primary,
+.site-header:has(.mega-panel--archives:hover) .nav-item--archives .nav-primary,
+.site-header:has(.mega-panel--archives:focus-within) .nav-item--archives .nav-primary,
+.site-header:has(.nav-item--archives.is-mega-pinned) .nav-item--archives .nav-primary {
+  color: var(--gold);
+}
+
+/* Cross-section link: quieter than the gold Shop pill */
+a.nav-cross:any-link {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+  color: rgba(245, 240, 235, 0.72);
+  text-decoration: none;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid rgba(201, 169, 110, 0.35);
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
+  white-space: nowrap;
+  line-height: 1;
+}
+a.nav-cross:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(201, 169, 110, 0.06);
+}
+@media (min-width: 768px) and (max-width: 1180px) {
+  a.nav-cross:any-link {
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    padding: 0.45rem 0.9rem;
+  }
+}
+.header-util-links a.header-util-switch:any-link {
+  color: var(--gold);
+  padding-left: 1.75rem;
+  position: relative;
+}
+.header-util-links a.header-util-switch::before {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  width: 1px;
+  height: 0.75rem;
+  transform: translateY(-50%);
+  background: var(--header-border);
+}
+.header-util-links a.header-util-switch::after {
+  content: " ↗";
+}
+.header-util-links a.header-util-switch:hover {
+  color: var(--gold-light);
+}
+a.mobile-nav-cross:any-link {
+  display: block;
+  text-align: center;
+  padding: 0.9rem 1.5rem;
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Anchor targets clear the fixed header */
+[id="manifesto"],
+[id="heritage"],
+[id="craft"],
+[id="vision"],
+[id="values"],
+[id="categories"],
+[id="new-arrivals"],
+[id="all-pieces"] {
+  scroll-margin-top: 7rem;
+}
+
+/* --------------------------------------------------------------------------
+   Gateway (index.html) — the two doors into the house
+   -------------------------------------------------------------------------- */
+.gateway {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 5vh, 4rem);
+  padding: 4rem 1.5rem 2rem;
+  overflow: hidden;
+}
+.gateway::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      120% 90% at 50% 0%,
+      rgba(201, 169, 110, 0.07),
+      transparent 60%
+    ),
+    linear-gradient(to bottom, var(--charcoal), var(--background));
+  pointer-events: none;
+}
+@media (min-width: 768px) {
+  .gateway {
+    padding: 5rem 4rem 2.5rem;
+  }
+}
+.gateway-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 6rem;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: heroLine 1.2s 0.2s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.gateway-hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  width: 100%;
+}
+.gateway-logo {
+  margin: 0;
+  font-size: 0;
+  line-height: 0;
+}
+.gateway-lobby-video {
+  display: block;
+  width: min(100%, 46rem);
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.35s forwards ease-out;
+}
+.gateway-tagline {
+  margin: 0.75rem 0 0;
+  font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  animation: fadeUp 0.8s 1.1s forwards ease-out;
+}
+.gateway-divider {
+  width: 5rem;
+  height: 1px;
+  background: rgba(201, 169, 110, 0.4);
+  margin: 1.75rem auto 0;
+  transform: scaleX(0);
+  animation: scaleXIn 1s 1.4s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gateway-doors {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 68rem;
+  display: grid;
+  gap: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 1s forwards ease-out;
+}
+@media (min-width: 800px) {
+  .gateway-doors {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+a.gateway-door:any-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem 1.75rem 2.25rem;
+  border: 1px solid var(--header-border);
+  background: rgba(17, 17, 17, 0.5);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.4s, background 0.4s, transform 0.4s;
+}
+@media (min-width: 800px) {
+  a.gateway-door:any-link {
+    padding: 3rem 2.5rem 3.25rem;
+    min-height: 21rem;
+  }
+}
+a.gateway-door::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background: var(--gold);
+  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+a.gateway-door:hover,
+a.gateway-door:focus-visible {
+  border-color: rgba(201, 169, 110, 0.45);
+  background: rgba(201, 169, 110, 0.05);
+  transform: translateY(-4px);
+}
+a.gateway-door:hover::after,
+a.gateway-door:focus-visible::after {
+  width: 100%;
+}
+.gateway-door-index {
+  font-size: 0.625rem;
+  letter-spacing: 0.28em;
+  color: var(--muted2);
+}
+.gateway-door-kicker {
+  font-size: 0.625rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.5rem;
+}
+.gateway-door-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+.gateway-door-desc {
+  margin-top: 0.5rem;
+  max-width: 26rem;
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.gateway-door-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.gateway-door-cta::after {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.35s;
+}
+a.gateway-door:hover .gateway-door-cta::after {
+  width: 3.25rem;
+}
+
+.gateway-foot {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 68rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  padding-top: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 1.9s forwards ease-out;
+}
+@media (min-width: 768px) {
+  .gateway-foot {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.gateway-foot-legal {
+  margin: 0;
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  color: rgba(245, 240, 235, 0.35);
+}
+.gateway-foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem 1.75rem;
+}
+.gateway-foot-links a:any-link {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 235, 0.4);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+.gateway-foot-links a:hover {
+  color: var(--gold);
+}
+
+/* --------------------------------------------------------------------------
+   Branding section (house.html)
+   -------------------------------------------------------------------------- */
+.house-hero {
+  position: relative;
+  min-height: 82vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 9rem 1.5rem 5rem;
+}
+.house-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      110% 80% at 50% 0%,
+      rgba(201, 169, 110, 0.08),
+      transparent 62%
+    ),
+    linear-gradient(to bottom, rgba(26, 26, 26, 0.55), var(--background));
+}
+.house-hero-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 46rem;
+}
+h1.house-hero-title {
+  font-size: clamp(2.25rem, 7vw, 5rem);
+  line-height: 1.08;
+  margin: 1rem 0 1.5rem;
+}
+.house-hero-lede {
+  margin: 0 auto;
+  max-width: 34rem;
+  font-size: clamp(0.9rem, 1.8vw, 1.0625rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.house-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.75rem;
+  margin-top: 2.5rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted2);
+}
+
+.house-manifesto {
+  padding: 5rem 2rem 6rem;
+  text-align: center;
+  border-bottom: 1px solid var(--header-border);
+}
+@media (min-width: 768px) {
+  .house-manifesto {
+    padding: 7rem 4rem 8rem;
+  }
+}
+.house-manifesto-statement {
+  margin: 0 auto;
+  max-width: 44rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 4.2vw, 3rem);
+  font-weight: 400;
+  line-height: 1.28;
+  letter-spacing: 0.02em;
+}
+.house-manifesto-statement em {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--gold);
+  font-style: italic;
+}
+.house-manifesto-body {
+  margin: 2.5rem auto 0;
+  max-width: 36rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.house-universes {
+  padding: 5rem 2rem;
+  border-top: 1px solid var(--header-border);
+}
+@media (min-width: 768px) {
+  .house-universes {
+    padding: 7rem 4rem;
+  }
+}
+.house-universe-grid {
+  display: grid;
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+@media (min-width: 800px) {
+  .house-universe-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+}
+.house-universe {
+  position: relative;
+  padding: 2.25rem 1.75rem 2.5rem;
+  border: 1px solid var(--header-border);
+  background: rgba(17, 17, 17, 0.45);
+  text-align: center;
+  transition: border-color 0.35s, background 0.35s;
+}
+.house-universe:hover {
+  border-color: rgba(201, 169, 110, 0.4);
+  background: rgba(201, 169, 110, 0.04);
+}
+.house-universe-letter {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: rgba(201, 169, 110, 0.28);
+}
+.house-universe h3 {
+  margin: 1.25rem 0 0.75rem;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+.house-universe p {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.house-cross {
+  padding: 5rem 2rem;
+  border-top: 1px solid var(--header-border);
+  border-bottom: 1px solid var(--header-border);
+  background: rgba(17, 17, 17, 0.4);
+}
+@media (min-width: 768px) {
+  .house-cross {
+    padding: 6rem 4rem;
+  }
+}
+.house-cross-inner {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .house-cross-inner {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 4rem;
+  }
+}
+.house-cross-text h2 {
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+.house-cross-text p {
+  margin: 0;
+  max-width: 34rem;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.house-cross-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 2rem;
+}
+@media (min-width: 900px) {
+  .house-cross-links {
+    justify-content: flex-end;
+  }
+}
+
+/* The gateway doors are the only entry into the site: never leave them
+   animated-out for users who suppress motion. */
+@media (prefers-reduced-motion: reduce) {
+  .gateway-lobby-video,
+  .gateway-tagline,
+  .gateway-doors,
+  .gateway-foot {
+    opacity: 1;
+    animation: none;
+  }
+  .gateway-line,
+  .gateway-divider {
+    transform: none;
+    animation: none;
+  }
+  a.gateway-door:hover,
+  a.gateway-door:focus-visible {
+    transform: none;
   }
 }
