@@ -155,6 +155,7 @@
       email: details.email,
       password: details.password,
       options: {
+        emailRedirectTo: new URL("account.html", window.location.href).href,
         /* Read by the on-signup trigger to populate the profile row. */
         data: {
           full_name: details.fullName || "",
@@ -181,6 +182,22 @@
     if (!client) throw new Error("The boutique is offline.");
     const redirectTo = new URL("account.html", window.location.href).href;
     const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) throw error;
+  }
+
+  async function resendConfirmation(email) {
+    if (!client) throw new Error("The boutique is offline.");
+    const { error } = await client.auth.resend({
+      type: "signup",
+      email: email,
+      options: { emailRedirectTo: new URL("account.html", window.location.href).href }
+    });
+    if (error) throw error;
+  }
+
+  async function updatePassword(password) {
+    if (!client) throw new Error("The boutique is offline.");
+    const { error } = await client.auth.updateUser({ password: password });
     if (error) throw error;
   }
 
@@ -334,6 +351,7 @@
     const { data, error } = await client
       .from("orders")
       .select("*, order_items(*)")
+      .eq("user_id", state.session.user.id)
       .order("placed_at", { ascending: false });
     if (error) {
       console.error("Order history failed to load.", error);
@@ -376,6 +394,12 @@
       }
       group.innerHTML = '<a class="mobile-nav-cta" href="' + href + '">' + label + "</a>";
     }
+
+    /* Gateway has no header bar — keep its Sign in / account links in sync. */
+    document.querySelectorAll("[data-gateway-account]").forEach(function (link) {
+      link.href = href;
+      link.textContent = label;
+    });
   }
 
   /* ------------------------------------------------------------------ *
@@ -392,10 +416,19 @@
     }
 
     emit("session", {
+      event: event,
       session: state.session,
       profile: state.profile,
       isAdmin: state.isAdmin
     });
+  }
+
+  /* One auth update at a time so a fast SIGNED_OUT cannot finish after a later SIGNED_IN. */
+  var sessionQueue = Promise.resolve();
+
+  function enqueueSessionUpdate(task) {
+    sessionQueue = sessionQueue.then(task, task);
+    return sessionQueue;
   }
 
   const ready = (async function boot() {
@@ -413,12 +446,30 @@
     if (state.session) await mergeCartOnSignIn();
 
     client.auth.onAuthStateChange(function (event, session) {
-      const changed = (session && session.user.id) !== (state.session && state.session.user.id);
-      if (event === "SIGNED_OUT" || changed) {
-        applySession(session, event);
-      } else {
+      enqueueSessionUpdate(async function () {
+        var changed =
+          (session && session.user.id) !== (state.session && state.session.user.id);
+
+        if (event === "PASSWORD_RECOVERY") {
+          state.session = session;
+          emit("session", {
+            event: event,
+            session: session,
+            profile: state.profile,
+            isAdmin: state.isAdmin
+          });
+          return;
+        }
+
+        if (event === "SIGNED_OUT" || changed) {
+          await applySession(session, event);
+          return;
+        }
+
         state.session = session;
-      }
+      }).catch(function (error) {
+        console.error("Auth session update failed.", error);
+      });
     });
 
     return state;
@@ -456,6 +507,8 @@
     signIn: signIn,
     signOut: signOut,
     sendPasswordReset: sendPasswordReset,
+    resendConfirmation: resendConfirmation,
+    updatePassword: updatePassword,
     updateProfile: updateProfile,
     loadProfile: loadProfile,
     loadCatalogue: loadCatalogue,

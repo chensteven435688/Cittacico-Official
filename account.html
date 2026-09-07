@@ -98,6 +98,28 @@
         <div class="container">
           <p class="account-loading" data-account-loading>Opening your registry…</p>
 
+          <div class="account-panel" data-account-recovery hidden>
+            <h2>Choose a new password</h2>
+            <p class="account-panel-lede">
+              You arrived from a reset link. Set a new password to continue.
+            </p>
+            <form class="account-form" data-recovery-form novalidate>
+              <label>
+                <span>New password</span>
+                <input
+                  type="password"
+                  name="password"
+                  autocomplete="new-password"
+                  minlength="8"
+                  required
+                />
+                <small>At least 8 characters.</small>
+              </label>
+              <p class="account-message" data-recovery-message hidden></p>
+              <button type="submit" class="btn-checkout">Save password</button>
+            </form>
+          </div>
+
           <!-- ---------- signed out ---------- -->
           <div class="account-gate" data-account-auth hidden>
             <div class="account-panel">
@@ -116,6 +138,9 @@
                 <button type="submit" class="btn-checkout">Sign in</button>
                 <button type="button" class="account-link-button" data-reset-password>
                   Forgotten your password?
+                </button>
+                <button type="button" class="account-link-button" data-resend-confirmation hidden>
+                  Resend confirmation email
                 </button>
               </form>
             </div>
@@ -176,6 +201,9 @@
                 </label>
                 <p class="account-message" data-signup-message hidden></p>
                 <button type="submit" class="btn-checkout">Create account</button>
+                <button type="button" class="account-link-button" data-resend-signup hidden>
+                  Resend confirmation email
+                </button>
               </form>
             </div>
           </div>

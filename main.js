@@ -228,8 +228,106 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   var ORDER_KEY = "cittacico-last-order";
   /* The bag belongs to the shopping section only; the gateway and the house pages omit it. */
   var isShopSection = document.body.getAttribute("data-section") === "shop";
+  var isGateway = document.body.getAttribute("data-section") === "gateway";
+  var pagePath = (window.location.pathname || "").split("/").pop() || "index.html";
+  var isAuthPage =
+    pagePath === "account.html" ||
+    pagePath === "admin.html" ||
+    pagePath === "payment-success.html" ||
+    pagePath === "payment-failure.html";
   /* Set once checkout has initialised, so a later catalogue load can refresh its totals. */
   var refreshCheckoutSummary = null;
+  var MEMBER_PROMPT_KEY = "cittacico-member-prompt-v1";
+  var pendingMemberAction = null;
+
+  function isSignedIn() {
+    return Boolean(window.CITTACICO && window.CITTACICO.getSession && window.CITTACICO.getSession());
+  }
+
+  function memberPromptDismissed() {
+    try {
+      return window.sessionStorage.getItem(MEMBER_PROMPT_KEY) === "1";
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function dismissMemberPrompt() {
+    try {
+      window.sessionStorage.setItem(MEMBER_PROMPT_KEY, "1");
+    } catch (error) {}
+  }
+
+  function ensureMembershipModal() {
+    var modal = document.querySelector("[data-member-modal]");
+    if (modal) return modal;
+
+    modal = document.createElement("div");
+    modal.className = "member-modal";
+    modal.setAttribute("data-member-modal", "");
+    modal.setAttribute("hidden", "");
+    modal.setAttribute("aria-hidden", "true");
+    modal.innerHTML =
+      '<div class="member-modal-backdrop" data-member-dismiss></div>' +
+      '<div class="member-modal-panel" role="dialog" aria-modal="true" aria-labelledby="member-modal-title">' +
+      '<button type="button" class="member-modal-close" data-member-dismiss aria-label="Close">×</button>' +
+      '<p class="member-modal-kicker">Maison membership</p>' +
+      '<h2 id="member-modal-title">Join the house</h2>' +
+      '<p class="member-modal-lede">' +
+      "Register to become a member — keep a saved bag across visits, see your orders, " +
+      "and receive future news from the maison." +
+      "</p>" +
+      '<div class="member-modal-actions">' +
+      '<a class="btn-checkout" href="account.html">Become a member</a>' +
+      '<a class="account-link-button" href="account.html">Sign in</a>' +
+      '<button type="button" class="account-link-button" data-member-continue>Continue without joining</button>' +
+      "</div>" +
+      "</div>";
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (e) {
+      if (e.target.closest("[data-member-dismiss]")) {
+        dismissMemberPrompt();
+        closeMembershipModal(false);
+        return;
+      }
+      if (e.target.closest("[data-member-continue]")) {
+        dismissMemberPrompt();
+        closeMembershipModal(true);
+      }
+    });
+
+    return modal;
+  }
+
+  function openMembershipModal(thenContinue) {
+    pendingMemberAction = thenContinue || null;
+    var modal = ensureMembershipModal();
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("member-modal-open");
+  }
+
+  function closeMembershipModal(runPending) {
+    var modal = document.querySelector("[data-member-modal]");
+    if (modal) {
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+    }
+    document.body.classList.remove("member-modal-open");
+    var next = pendingMemberAction;
+    pendingMemberAction = null;
+    if (runPending && typeof next === "function") next();
+  }
+
+  /* Soft invite: guests can still browse and shop after dismissing once this visit. */
+  function withMembershipPrompt(action) {
+    if (isGateway || isAuthPage || isSignedIn() || memberPromptDismissed()) {
+      action();
+      return;
+    }
+    openMembershipModal(action);
+  }
 
   function formatPrice(value) {
     return new Intl.NumberFormat("en-US", {
@@ -662,19 +760,27 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   }
 
   document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-member-modal]")) return;
+
     var addButton = e.target.closest("[data-add-to-bag]");
     if (addButton) {
-      addToCartFromProduct(getProduct(addButton.getAttribute("data-add-to-bag")), 1);
+      e.preventDefault();
+      withMembershipPrompt(function () {
+        addToCartFromProduct(getProduct(addButton.getAttribute("data-add-to-bag")), 1);
+      });
       return;
     }
 
     if (e.target.closest(".nav-bag") || e.target.closest(".mobile-bag-toggle")) {
-      if (toggle && overlay) {
-        toggle.classList.remove("is-open");
-        overlay.classList.remove("is-open");
-        overlay.setAttribute("aria-hidden", "true");
-      }
-      openBagDrawer();
+      e.preventDefault();
+      withMembershipPrompt(function () {
+        if (toggle && overlay) {
+          toggle.classList.remove("is-open");
+          overlay.classList.remove("is-open");
+          overlay.setAttribute("aria-hidden", "true");
+        }
+        openBagDrawer();
+      });
       return;
     }
 
@@ -690,8 +796,50 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     }
 
     if (e.target.closest(".bag-checkout")) {
-      closeBagDrawer();
-      window.location.href = "checkout.html";
+      e.preventDefault();
+      withMembershipPrompt(function () {
+        closeBagDrawer();
+        window.location.href = "checkout.html";
+      });
+      return;
+    }
+
+    /*
+     * On House and other non-gateway pages: the first meaningful click for a
+     * guest opens the membership invite. Browsing still continues after
+     * Continue without joining.
+     */
+    if (
+      !isGateway &&
+      !isAuthPage &&
+      !isSignedIn() &&
+      !memberPromptDismissed() &&
+      !document.body.classList.contains("member-modal-open")
+    ) {
+      var inviteClick =
+        e.target.closest("a[href]") ||
+        e.target.closest("button:not(.mobile-toggle):not(.bag-close)");
+      if (
+        inviteClick &&
+        !inviteClick.closest(".header-util-account") &&
+        !inviteClick.closest("[data-gateway-account]") &&
+        !inviteClick.closest(".member-modal")
+      ) {
+        var href = inviteClick.getAttribute("href");
+        var isExternal = href && /^https?:/i.test(href);
+        var isHashOnly = href === "#" || (href && href.charAt(0) === "#");
+        if (!isExternal && !isHashOnly) {
+          e.preventDefault();
+          e.stopPropagation();
+          withMembershipPrompt(function () {
+            if (inviteClick.tagName === "A" && href) {
+              window.location.href = href;
+              return;
+            }
+            inviteClick.click();
+          });
+        }
+      }
     }
   });
 
@@ -703,7 +851,12 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   });
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") closeBagDrawer();
+    if (e.key !== "Escape") return;
+    if (document.body.classList.contains("member-modal-open")) {
+      closeMembershipModal(false);
+      return;
+    }
+    closeBagDrawer();
   });
 
   function initCheckoutPage() {

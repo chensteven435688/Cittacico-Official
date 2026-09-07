@@ -12,6 +12,9 @@
   const loadingEl = page.querySelector("[data-account-loading]");
   const gateEl = page.querySelector("[data-account-auth]");
   const dashboardEl = page.querySelector("[data-account-dashboard]");
+  const recoveryEl = page.querySelector("[data-account-recovery]");
+  const resendSignIn = page.querySelector("[data-resend-confirmation]");
+  const resendSignUp = page.querySelector("[data-resend-signup]");
 
   const STATUS_LABELS = {
     pending: "Awaiting confirmation",
@@ -89,9 +92,34 @@
       window.location.reload();
     } catch (error) {
       busy(signInForm, false);
-      say(signInMessage, error.message || "Those details were not recognised.", "error");
+      const message = error.message || "Those details were not recognised.";
+      say(signInMessage, message, "error");
+      if (/not confirmed/i.test(message) && resendSignIn) resendSignIn.hidden = false;
     }
   });
+
+  async function resendFor(email, messageEl, button) {
+    if (!email) {
+      say(messageEl, "Enter your email above, then ask again.", "error");
+      return;
+    }
+    try {
+      if (button) button.disabled = true;
+      await backend.resendConfirmation(email);
+      say(messageEl, "A new confirmation is on its way to " + email + ".", "success");
+    } catch (error) {
+      say(messageEl, error.message || "The confirmation could not be sent.", "error");
+    } finally {
+      if (button) button.disabled = false;
+    }
+  }
+
+  if (resendSignIn) {
+    resendSignIn.addEventListener("click", function () {
+      const email = String(new FormData(signInForm).get("email") || "").trim();
+      resendFor(email, signInMessage, resendSignIn);
+    });
+  }
 
   page.querySelector("[data-reset-password]").addEventListener("click", async function () {
     const email = String(new FormData(signInForm).get("email") || "").trim();
@@ -143,12 +171,53 @@
           " to sign in.",
         "success"
       );
+      if (resendSignUp) {
+        resendSignUp.hidden = false;
+        resendSignUp.dataset.email = String(data.get("email")).trim();
+      }
       signUpForm.reset();
     } catch (error) {
       busy(signUpForm, false);
       say(signUpMessage, error.message || "The account could not be created.", "error");
     }
   });
+
+  if (resendSignUp) {
+    resendSignUp.addEventListener("click", function () {
+      const email =
+        resendSignUp.dataset.email ||
+        String(new FormData(signUpForm).get("email") || "").trim();
+      resendFor(email, signUpMessage, resendSignUp);
+    });
+  }
+
+  const recoveryForm = page.querySelector("[data-recovery-form]");
+  const recoveryMessage = page.querySelector("[data-recovery-message]");
+
+  function showRecovery() {
+    if (loadingEl) loadingEl.hidden = true;
+    if (gateEl) gateEl.hidden = true;
+    if (dashboardEl) dashboardEl.hidden = true;
+    if (recoveryEl) recoveryEl.hidden = false;
+  }
+
+  if (recoveryForm) {
+    recoveryForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      if (!recoveryForm.reportValidity()) return;
+      const password = String(new FormData(recoveryForm).get("password") || "");
+      say(recoveryMessage, "");
+      busy(recoveryForm, true, "Saving…");
+      try {
+        await backend.updatePassword(password);
+        busy(recoveryForm, false);
+        window.location.replace("account.html");
+      } catch (error) {
+        busy(recoveryForm, false);
+        say(recoveryMessage, error.message || "The password could not be saved.", "error");
+      }
+    });
+  }
 
   /* ------------------------------------------------------------------ *
    * Signed in
@@ -318,8 +387,23 @@
    * Boot
    * ------------------------------------------------------------------ */
 
+  function isRecoveryLanding() {
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const query = new URLSearchParams(window.location.search);
+    return hash.get("type") === "recovery" || query.get("type") === "recovery";
+  }
+
   backend.ready.then(async function () {
     if (loadingEl) loadingEl.hidden = true;
+
+    backend.on("session", function (payload) {
+      if (payload && payload.event === "PASSWORD_RECOVERY") showRecovery();
+    });
+
+    if (isRecoveryLanding()) {
+      showRecovery();
+      return;
+    }
 
     if (!backend.getSession()) {
       gateEl.hidden = false;

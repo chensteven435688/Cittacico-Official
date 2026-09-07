@@ -16,6 +16,8 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@^22";
 
+import { sendOrderEmails } from "./order-email.ts";
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -273,6 +275,36 @@ Deno.serve(async (req: Request) => {
      abandoned checkout leaves the client's selection intact. */
   if (userId && !checkoutUrl) {
     await admin.from("cart_items").delete().eq("user_id", userId);
+  }
+
+  /* The receipt goes out only when the order is already final. With Stripe in
+     play the client is still on their way to pay, so the webhook writes to
+     them instead, once the money has actually settled. */
+  if (!checkoutUrl) {
+    await sendOrderEmails({
+      orderNumber: order.order_number,
+      email,
+      currency: order.currency,
+      subtotalCents: subtotal,
+      totalCents: order.total_cents,
+      lines: lines.map((line) => ({
+        name: line.product.name,
+        collection: line.product.collection,
+        quantity: line.quantity,
+        unitPriceCents: line.product.price_cents,
+        lineTotalCents: line.lineTotal,
+      })),
+      shipping: {
+        fullName: shipFullName,
+        line1: shipLine1,
+        line2: text(shipping.line2, 200) || null,
+        city: shipCity,
+        region: text(shipping.region, 120) || null,
+        postalCode: text(shipping.postalCode, 40) || null,
+        country: shipCountry,
+      },
+      paid: false,
+    });
   }
 
   return json({

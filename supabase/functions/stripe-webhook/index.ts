@@ -13,6 +13,8 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@^22";
 
+import { sendOrderEmails } from "./order-email.ts";
+
 /* Deno needs the Web Crypto provider for asynchronous signature checks. */
 const cryptoProvider = Stripe.createSubtleCryptoProvider();
 
@@ -38,6 +40,52 @@ async function findOrder(session: Stripe.Checkout.Session) {
       .maybeSingle();
 
   return data;
+}
+
+/** Reads the settled order back out of the database and writes the receipt. */
+async function sendReceipt(orderId: string): Promise<void> {
+  const { data: order } = await admin
+    .from("orders")
+    /* One unbroken literal: postgrest-js infers the row type from the text of
+       this string, and a concatenation collapses it to an untyped result. */
+    .select(`
+      order_number, email, currency, subtotal_cents, total_cents,
+      ship_full_name, ship_line1, ship_line2, ship_city, ship_region,
+      ship_postal_code, ship_country
+    `)
+    .eq("id", orderId)
+    .maybeSingle();
+  if (!order) return;
+
+  const { data: items } = await admin
+    .from("order_items")
+    .select("product_name, product_collection, quantity, unit_price_cents, line_total_cents")
+    .eq("order_id", orderId);
+
+  await sendOrderEmails({
+    orderNumber: order.order_number,
+    email: order.email,
+    currency: order.currency,
+    subtotalCents: order.subtotal_cents,
+    totalCents: order.total_cents,
+    lines: (items ?? []).map((item) => ({
+      name: item.product_name,
+      collection: item.product_collection,
+      quantity: item.quantity,
+      unitPriceCents: item.unit_price_cents,
+      lineTotalCents: item.line_total_cents,
+    })),
+    shipping: {
+      fullName: order.ship_full_name,
+      line1: order.ship_line1,
+      line2: order.ship_line2,
+      city: order.ship_city,
+      region: order.ship_region,
+      postalCode: order.ship_postal_code,
+      country: order.ship_country,
+    },
+    paid: true,
+  });
 }
 
 Deno.serve(async (req: Request) => {
@@ -86,6 +134,10 @@ Deno.serve(async (req: Request) => {
           break;
         }
 
+        /* Stripe retries on any non-2xx, and a delayed payment method fires
+           both events. Noting the prior state keeps the receipt to one. */
+        const alreadySettled = order.payment_status === "paid";
+
         await admin
           .from("orders")
           .update({
@@ -102,6 +154,8 @@ Deno.serve(async (req: Request) => {
         if (order.user_id) {
           await admin.from("cart_items").delete().eq("user_id", order.user_id);
         }
+
+        if (!alreadySettled) await sendReceipt(order.id);
         break;
       }
 

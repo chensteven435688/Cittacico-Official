@@ -3260,6 +3260,27 @@ a.mobile-nav-cross:any-link {
   transform: scaleX(0);
   animation: scaleXIn 1s 1.4s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+.gateway-signin {
+  display: inline-flex;
+  margin-top: 1.75rem;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid rgba(201, 169, 110, 0.45);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  opacity: 0;
+  animation: fadeUp 0.9s 1.55s forwards ease-out;
+}
+.gateway-signin:hover {
+  color: var(--foreground);
+  border-color: rgba(245, 240, 235, 0.55);
+  background: rgba(245, 240, 235, 0.04);
+}
 
 .gateway-doors {
   position: relative;
@@ -4685,4 +4706,73 @@ h1.series-hero-title {
     overflow-x: auto;
     white-space: nowrap;
   }
+}
+
+/* Membership invite */
+body.member-modal-open {
+  overflow: hidden;
+}
+.member-modal[hidden] {
+  display: none !important;
+}
+.member-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.member-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.72);
+}
+.member-modal-panel {
+  position: relative;
+  width: min(100%, 28rem);
+  padding: 2.5rem 2rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--header-border);
+  text-align: center;
+}
+.member-modal-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 1rem;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.member-modal-close:hover {
+  color: var(--foreground);
+}
+.member-modal-kicker {
+  margin: 0 0 0.75rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.member-modal-panel h2 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+.member-modal-lede {
+  margin: 0 0 1.75rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.member-modal-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
