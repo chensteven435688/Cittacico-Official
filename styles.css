@@ -3643,7 +3643,7 @@ h1.house-hero-title {
 }
 
 /* ==========================================================================
-   Series: the Calista feature block and the editorial series page
+   Series: the Veil of Absence feature block and the editorial series page
    ========================================================================== */
 
 /* Feature block on house.html --------------------------------------------- */
@@ -3815,6 +3815,12 @@ h1.series-hero-title {
   letter-spacing: 0.04em;
   line-height: 0.92;
 }
+h1.series-hero-title--long {
+  font-size: clamp(2.35rem, 8vw, 6.25rem);
+  max-width: 12ch;
+  letter-spacing: 0.03em;
+  line-height: 1.02;
+}
 .series-hero-lede {
   margin: 1.5rem 0 0;
   max-width: 30rem;
@@ -3903,6 +3909,9 @@ h1.series-hero-title {
   line-height: 1.85;
   color: var(--muted);
   text-align: left;
+}
+.series-statement-body + .series-statement-body {
+  margin-top: 1.35rem;
 }
 @media (min-width: 768px) {
   .series-statement-body {
@@ -4149,6 +4158,9 @@ h1.series-hero-title {
   text-transform: uppercase;
   cursor: pointer;
   transition: opacity 0.3s ease;
+}
+a.btn-checkout:any-link {
+  color: var(--background);
 }
 .btn-checkout:hover {
   opacity: 0.88;
