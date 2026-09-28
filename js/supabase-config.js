@@ -25,4 +25,9 @@ window.CITTACICO_SUPABASE = {
    * this to true on its own cannot take money by mistake.
    */
   paymentsEnabled: false
+
+  /*
+   * The boutique pages exist, but they are hidden on the live site until
+   * BOUTIQUE_OPEN is set to true in js/boutique-gate.js.
+   */
 };

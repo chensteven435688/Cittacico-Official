@@ -3416,6 +3416,23 @@ a.mobile-nav-cross:any-link {
     gap: 1.5rem;
   }
 }
+/* Closed to the public. js/boutique-gate.js adds .boutique-closed on the live site. */
+html.boutique-closed a[href^="shop.html"],
+html.boutique-closed a[href^="collections.html"],
+html.boutique-closed a[href^="collection-"],
+html.boutique-closed a[href^="product.html"],
+html.boutique-closed a[href^="checkout.html"],
+html.boutique-closed a[href^="payment-"],
+html.boutique-closed .boutique-only,
+html.boutique-closed .mega-col:has(a[href^="shop.html"]),
+html.boutique-closed .footer-col:has(a[href^="shop.html"]),
+html.boutique-closed .mobile-nav-group:has(a[href^="shop.html"]) {
+  display: none !important;
+}
+html.boutique-closed .gateway-doors {
+  grid-template-columns: minmax(0, 36rem);
+  justify-content: center;
+}
 a.gateway-door:any-link {
   position: relative;
   display: flex;

@@ -90,7 +90,7 @@
           String(data.get("email")).trim(),
           String(data.get("password"))
         );
-        window.location.href = "shop.html";
+        window.location.href = window.CITTACICO_BOUTIQUE_OPEN ? "shop.html" : "house.html";
       } catch (error) {
         busy(signInForm, false);
         const message = error.message || "Those details were not recognised.";
@@ -300,9 +300,10 @@
     const root = page.querySelector("[data-account-orders]");
 
     if (!orders.length) {
-      root.innerHTML =
-        '<p class="account-empty">No acquisitions yet. ' +
-        '<a class="link-gold" href="shop.html">Begin shopping</a>.</p>';
+      root.innerHTML = window.CITTACICO_BOUTIQUE_OPEN
+        ? '<p class="account-empty">No acquisitions yet. ' +
+          '<a class="link-gold" href="shop.html">Begin shopping</a>.</p>'
+        : '<p class="account-empty">No acquisitions yet.</p>';
       return;
     }
 

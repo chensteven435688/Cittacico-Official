@@ -80,7 +80,7 @@
       });
 
       if (result.session) {
-        window.location.href = "shop.html";
+        window.location.href = window.CITTACICO_BOUTIQUE_OPEN ? "shop.html" : "house.html";
         return;
       }
 
@@ -116,7 +116,7 @@
     if (loadingEl) loadingEl.hidden = true;
 
     if (backend.getSession()) {
-      window.location.href = "shop.html";
+      window.location.href = window.CITTACICO_BOUTIQUE_OPEN ? "shop.html" : "house.html";
       return;
     }
 
