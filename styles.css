@@ -2540,6 +2540,9 @@ a.btn-checkout-primary:any-link {
   .story-block.reverse .story-visual {
     order: -1;
   }
+  #heritage.story-block {
+    gap: 2.75rem;
+  }
 }
 .story-visual {
   aspect-ratio: 4/5;
@@ -2599,6 +2602,15 @@ a.btn-checkout-primary:any-link {
 }
 .story-visual--portrait {
   background: #0c0c0c;
+}
+.story-visual--plate {
+  background: #0a0a0a;
+}
+.story-visual--plate img {
+  object-position: center;
+}
+.story-visual--window {
+  aspect-ratio: 9 / 16;
 }
 .story-text p.story-designer-aka {
   margin: -0.75rem 0 1.5rem;
@@ -4120,6 +4132,7 @@ h1.series-hero-title--long {
 }
 .series-plates figcaption {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.85rem;
   margin-top: 1rem;
