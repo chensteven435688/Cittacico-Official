@@ -265,6 +265,15 @@ a.logo:any-link {
   a.nav-shop:any-link {
     padding: 0.45rem 0.9rem;
   }
+  .site-nav {
+    grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+  }
+}
+/* Mid widths: these links already appear in the utility bar above */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-cluster--right a.nav-simple:any-link {
+    display: none;
+  }
 }
 .nav-item {
   position: relative;
