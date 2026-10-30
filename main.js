@@ -732,6 +732,32 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 
+  /* Ivoire / Noir theme; the inline script in each page's <head> applies a saved choice before paint */
+  var THEME_KEY = "cittacico-theme";
+  var themeToggles = document.querySelectorAll("[data-theme-toggle]");
+  function applyTheme(theme) {
+    var dark = theme === "dark";
+    if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    else document.documentElement.removeAttribute("data-theme");
+    themeToggles.forEach(function (btn) {
+      btn.setAttribute("aria-pressed", dark ? "true" : "false");
+      btn.setAttribute("aria-label", dark ? "Switch to the Ivoire theme" : "Switch to the Noir theme");
+    });
+  }
+  applyTheme(document.documentElement.getAttribute("data-theme"));
+  themeToggles.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+      try {
+        window.localStorage.setItem(THEME_KEY, next);
+      } catch (error) {}
+    });
+  });
+  window.addEventListener("storage", function (e) {
+    if (e.key === THEME_KEY) applyTheme(e.newValue);
+  });
+
   /* Mobile menu */
   var toggle = document.querySelector(".mobile-toggle");
   var overlay = document.querySelector(".mobile-overlay");
@@ -819,7 +845,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     ) {
       var inviteClick =
         e.target.closest("a[href]") ||
-        e.target.closest("button:not(.mobile-toggle):not(.bag-close)");
+        e.target.closest("button:not(.mobile-toggle):not(.bag-close):not([data-theme-toggle])");
       if (
         inviteClick &&
         !inviteClick.closest(".header-util-account") &&
@@ -1243,8 +1269,9 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     formatPrice: formatPrice
   };
 
-  /* Desktop mega menus: click to keep open when pointer leaves the label; click again to visit link */
+  /* Touch tablets have no hover: first tap opens the mega menu, second tap visits the link */
   var megaNavLinks = document.querySelectorAll(".nav-item.has-mega > .nav-primary");
+  var megaTapQuery = window.matchMedia("(min-width: 768px) and (hover: none)");
   function clearMegaPins() {
     document.querySelectorAll(".nav-item.has-mega.is-mega-pinned").forEach(function (el) {
       el.classList.remove("is-mega-pinned");
@@ -1258,7 +1285,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       navPrimary.setAttribute("aria-haspopup", "true");
       navPrimary.setAttribute("aria-expanded", "false");
       navPrimary.addEventListener("click", function (e) {
-        if (!window.matchMedia("(min-width: 768px)").matches) return;
+        if (!megaTapQuery.matches) return;
         var item = navPrimary.closest(".nav-item.has-mega");
         if (!item) return;
         if (item.classList.contains("is-mega-pinned")) {
@@ -1279,7 +1306,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       });
     });
     document.addEventListener("click", function (e) {
-      if (!window.matchMedia("(min-width: 768px)").matches) return;
+      if (!megaTapQuery.matches) return;
       if (e.target.closest && e.target.closest(".site-header")) return;
       clearMegaPins();
     });
