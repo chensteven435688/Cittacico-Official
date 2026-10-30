@@ -2,6 +2,13 @@
 <html lang="en">
   <head>
     <script src="js/boutique-gate.js"></script>
+    <script>
+      try {
+        if (localStorage.getItem("cittacico-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Order confirmed | CITTÀCICO</title>
@@ -28,6 +35,11 @@
             <a href="locations.html">Locations</a>
             <a href="contact.html">Contact</a>
             <a class="header-util-switch" href="house.html">The House</a>
+            <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to the Noir theme">
+              <span class="theme-toggle-option theme-toggle-option--ivoire">Ivoire</span>
+              <span class="theme-toggle-sep" aria-hidden="true">/</span>
+              <span class="theme-toggle-option theme-toggle-option--noir">Noir</span>
+            </button>
           </div>
         </div>
       </div>
@@ -131,6 +143,14 @@
         </div>
         <div class="mobile-nav-group">
           <a href="house.html" class="mobile-nav-cross">The House</a>
+        </div>
+        <div class="mobile-nav-group mobile-nav-theme">
+          <span class="mobile-nav-label">Theme</span>
+          <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to the Noir theme">
+            <span class="theme-toggle-option theme-toggle-option--ivoire">Ivoire</span>
+            <span class="theme-toggle-sep" aria-hidden="true">/</span>
+            <span class="theme-toggle-option theme-toggle-option--noir">Noir</span>
+          </button>
         </div>
       </div>
     </div>

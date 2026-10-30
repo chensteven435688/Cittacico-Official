@@ -732,6 +732,32 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 
+  /* Ivoire / Noir theme; the inline script in each page's <head> applies a saved choice before paint */
+  var THEME_KEY = "cittacico-theme";
+  var themeToggles = document.querySelectorAll("[data-theme-toggle]");
+  function applyTheme(theme) {
+    var dark = theme === "dark";
+    if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    else document.documentElement.removeAttribute("data-theme");
+    themeToggles.forEach(function (btn) {
+      btn.setAttribute("aria-pressed", dark ? "true" : "false");
+      btn.setAttribute("aria-label", dark ? "Switch to the Ivoire theme" : "Switch to the Noir theme");
+    });
+  }
+  applyTheme(document.documentElement.getAttribute("data-theme"));
+  themeToggles.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+      try {
+        window.localStorage.setItem(THEME_KEY, next);
+      } catch (error) {}
+    });
+  });
+  window.addEventListener("storage", function (e) {
+    if (e.key === THEME_KEY) applyTheme(e.newValue);
+  });
+
   /* Mobile menu */
   var toggle = document.querySelector(".mobile-toggle");
   var overlay = document.querySelector(".mobile-overlay");
@@ -819,7 +845,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     ) {
       var inviteClick =
         e.target.closest("a[href]") ||
-        e.target.closest("button:not(.mobile-toggle):not(.bag-close)");
+        e.target.closest("button:not(.mobile-toggle):not(.bag-close):not([data-theme-toggle])");
       if (
         inviteClick &&
         !inviteClick.closest(".header-util-account") &&

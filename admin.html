@@ -3,6 +3,13 @@
   <head>
     <script src="js/boutique-gate.js"></script>
     <script>
+      try {
+        if (localStorage.getItem("cittacico-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+    <script>
       /* github-pages-base-fix */
       (function () {
         var h = location.hostname;

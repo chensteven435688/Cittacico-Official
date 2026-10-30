@@ -3,6 +3,13 @@
   <head>
     <script src="js/boutique-gate.js"></script>
     <script>
+      try {
+        if (localStorage.getItem("cittacico-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+    <script>
       /* github-pages-base-fix */
       (function () {
         var h = location.hostname;
@@ -96,6 +103,11 @@
             href="https://www.instagram.com/cittacico?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw=="
             >Instagram</a
           >
+          <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to the Noir theme">
+            <span class="theme-toggle-option theme-toggle-option--ivoire">Ivoire</span>
+            <span class="theme-toggle-sep" aria-hidden="true">/</span>
+            <span class="theme-toggle-option theme-toggle-option--noir">Noir</span>
+          </button>
         </div>
       </footer>
     </main>
