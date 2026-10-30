@@ -1243,8 +1243,9 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
     formatPrice: formatPrice
   };
 
-  /* Desktop mega menus: click to keep open when pointer leaves the label; click again to visit link */
+  /* Touch tablets have no hover: first tap opens the mega menu, second tap visits the link */
   var megaNavLinks = document.querySelectorAll(".nav-item.has-mega > .nav-primary");
+  var megaTapQuery = window.matchMedia("(min-width: 768px) and (hover: none)");
   function clearMegaPins() {
     document.querySelectorAll(".nav-item.has-mega.is-mega-pinned").forEach(function (el) {
       el.classList.remove("is-mega-pinned");
@@ -1258,7 +1259,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       navPrimary.setAttribute("aria-haspopup", "true");
       navPrimary.setAttribute("aria-expanded", "false");
       navPrimary.addEventListener("click", function (e) {
-        if (!window.matchMedia("(min-width: 768px)").matches) return;
+        if (!megaTapQuery.matches) return;
         var item = navPrimary.closest(".nav-item.has-mega");
         if (!item) return;
         if (item.classList.contains("is-mega-pinned")) {
@@ -1279,7 +1280,7 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       });
     });
     document.addEventListener("click", function (e) {
-      if (!window.matchMedia("(min-width: 768px)").matches) return;
+      if (!megaTapQuery.matches) return;
       if (e.target.closest && e.target.closest(".site-header")) return;
       clearMegaPins();
     });

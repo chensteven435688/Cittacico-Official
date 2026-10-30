@@ -369,6 +369,12 @@ a.nav-shop:hover {
     top: -2.75rem;
     height: 2.75rem;
   }
+  /* Keep nav labels above the panel's hover bridge so they stay clickable */
+  .nav-cluster a:any-link,
+  .nav-cluster button {
+    position: relative;
+    z-index: 51;
+  }
 }
 .site-header:has(.nav-item--collections:hover) .mega-panel--collections,
 .site-header:has(.nav-item--collections:focus-within) .mega-panel--collections,
