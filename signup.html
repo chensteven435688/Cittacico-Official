@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="js/boutique-gate.js"></script>
+    <script>
+      /* github-pages-base-fix */
+      (function () {
+        var h = location.hostname;
+        if (!h.endsWith("github.io")) return;
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var seg = parts[0];
+        if (seg.indexOf(".") !== -1) return;
+        var el = document.createElement("base");
+        el.setAttribute("href", "/" + seg + "/");
+        document.head.insertBefore(el, document.head.firstChild);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create your login | CITTÀCICO</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="auth.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-split" data-auth-page="signup">
+      <aside class="auth-visual auth-visual--signup">
+        <a class="auth-wordmark" href="index.html">CITTÀCICO</a>
+        <div class="auth-visual-copy">
+          <p class="auth-visual-title">Create your<br />login</p>
+          <p class="auth-visual-dek">You'll use this email to log in next time.</p>
+        </div>
+        <div class="auth-visual-art">
+          <svg class="auth-mark" viewBox="0 0 560 440" aria-hidden="true">
+            <g class="auth-mark-line">
+              <path d="M40 36 V396 H520" />
+              <path d="M40 36 L520 396" />
+              <path d="M40 116 L440 396" />
+              <path d="M40 76 H64" />
+              <path d="M40 116 H76" />
+              <path d="M40 156 H64" />
+              <path d="M40 196 H76" />
+              <path d="M40 236 H64" />
+              <path d="M40 276 H76" />
+              <path d="M40 316 H64" />
+              <path d="M40 356 H76" />
+              <path d="M80 396 V372" />
+              <path d="M120 396 V364" />
+              <path d="M160 396 V372" />
+              <path d="M200 396 V364" />
+              <path d="M240 396 V372" />
+              <path d="M280 396 V364" />
+              <path d="M320 396 V372" />
+              <path d="M360 396 V364" />
+              <path d="M400 396 V372" />
+              <path d="M440 396 V364" />
+              <path d="M480 396 V372" />
+            </g>
+            <g class="auth-mark-gold">
+              <path d="M40 36 H132 V128" />
+              <path d="M40 36 L132 128" />
+            </g>
+          </svg>
+        </div>
+      </aside>
+
+      <section class="auth-panel">
+        <div class="auth-panel-inner">
+          <p class="auth-loading" data-auth-loading>Opening…</p>
+          <div class="auth-ready" data-auth-ready hidden>
+            <h1 class="auth-title auth-title--question">What's your<br />email address?</h1>
+            <p class="auth-switch auth-switch--lead">
+              Already a member? <a href="login.html">Log in</a>
+            </p>
+            <form class="auth-form" data-signup-form novalidate>
+              <div class="auth-field">
+                <label class="auth-label" for="signup-email">Email address</label>
+                <div class="auth-control">
+                  <input
+                    id="signup-email"
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                    inputmode="email"
+                    autocapitalize="none"
+                    spellcheck="false"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="auth-step" data-step-password hidden>
+                <div class="auth-field">
+                  <label class="auth-label" for="signup-password">Password</label>
+                  <div class="auth-control auth-control--password">
+                    <input
+                      id="signup-password"
+                      type="password"
+                      name="password"
+                      autocomplete="new-password"
+                      minlength="8"
+                    />
+                    <button
+                      type="button"
+                      class="auth-reveal"
+                      data-reveal
+                      aria-controls="signup-password"
+                      aria-pressed="false"
+                      aria-label="Show password"
+                    >
+                      Show
+                    </button>
+                  </div>
+                  <p class="auth-hint">At least 8 characters.</p>
+                </div>
+              </div>
+              <p class="auth-message" data-auth-message hidden role="status"></p>
+              <div class="auth-actions auth-actions--end" data-auth-actions>
+                <button type="button" class="auth-text-button" data-edit-email hidden>
+                  Use a different email
+                </button>
+                <button type="submit" class="auth-submit" data-auth-submit>Continue</button>
+              </div>
+              <button type="button" class="auth-quiet" data-resend-signup hidden>
+                Resend confirmation email
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/cittacico-backend.js"></script>
+    <script src="js/cittacico-auth.js"></script>
+  </body>
+</html>

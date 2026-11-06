@@ -369,8 +369,12 @@
       ? state.isAdmin
         ? "Back office"
         : "My account"
-      : "Sign in";
-    const href = state.session && state.isAdmin ? "admin.html" : "account.html";
+      : "Log in";
+    const href = !state.session
+      ? "login.html"
+      : state.isAdmin
+        ? "admin.html"
+        : "account.html";
 
     const utilLinks = document.querySelector(".header-util-links");
     if (utilLinks) {
