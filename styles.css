@@ -2087,6 +2087,15 @@ body.bag-open {
   margin-top: 0.2rem;
   accent-color: var(--gold);
 }
+.checkout-checkbox a:any-link {
+  color: rgba(var(--fg-rgb), 0.78);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color 0.25s;
+}
+.checkout-checkbox a:hover {
+  color: var(--gold);
+}
 .checkout-field-row {
   display: grid;
   gap: 1.5rem;
@@ -3223,6 +3232,73 @@ textarea.form-field {
   transition: color 0.25s;
 }
 .footer-legal-links a:hover {
+  color: var(--gold);
+}
+
+/* Legal notes: same type, gold, and link treatment as the maison pages. */
+.legal-doc {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+.legal-updated {
+  margin: 0 0 2rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.legal-doc h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.5rem;
+  margin: 2.75rem 0 0.85rem;
+  scroll-margin-top: 7rem;
+}
+.legal-doc p,
+.legal-doc li {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.legal-doc p {
+  margin: 0 0 1rem;
+}
+.legal-doc ul {
+  margin: 0 0 1.1rem;
+  padding: 0 0 0 1.15rem;
+}
+.legal-doc li + li {
+  margin-top: 0.45rem;
+}
+.legal-doc li::marker {
+  color: var(--gold);
+}
+.legal-doc a:any-link {
+  color: rgba(var(--fg-rgb), 0.78);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color 0.25s;
+}
+.legal-doc a:hover {
+  color: var(--gold);
+}
+.legal-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--header-border);
+}
+.legal-related a:any-link {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(var(--fg-rgb), 0.45);
+}
+.legal-related a:hover,
+.legal-related a[aria-current="page"] {
   color: var(--gold);
 }
 

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="js/boutique-gate.js"></script>
+    <script>
+      /* github-pages-base-fix */
+      (function () {
+        var h = location.hostname;
+        if (!h.endsWith("github.io")) return;
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var seg = parts[0];
+        if (seg.indexOf(".") !== -1) return;
+        var el = document.createElement("base");
+        el.setAttribute("href", "/" + seg + "/");
+        document.head.insertBefore(el, document.head.firstChild);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Use | CITTÀCICO</title>
+    <meta name="description" content="Terms for reading the Cittàcico house, opening an account, and ordering from the boutique." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-section="house">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-dot" aria-hidden="true"></div>
+    <div class="custom-cursor custom-cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="header-util">
+        <div class="header-util-inner">
+          <span class="header-tagline">New York Maison · Since 2026</span>
+          <div class="header-util-links">
+            <a href="client-services.html">Client Services</a>
+            <a href="locations.html">Locations</a>
+            <a href="contact.html">Contact</a>
+            <a class="header-util-switch" href="shop.html">Boutique</a>
+          </div>
+        </div>
+      </div>
+      <nav class="site-nav" aria-label="The House">
+        <div class="nav-cluster nav-cluster--left">
+          <div class="nav-item nav-item--house has-mega">
+            <a href="house.html" class="nav-primary">The House</a>
+          </div>
+          <div class="nav-item nav-item--archives has-mega">
+            <a href="archives.html" class="nav-primary">Archives</a>
+          </div>
+        </div>
+        <a class="logo logo--center" href="index.html">CITTÀCICO</a>
+        <div class="nav-cluster nav-cluster--right">
+          <a class="nav-simple" href="locations.html">Locations</a>
+          <a class="nav-simple" href="contact.html">Contact</a>
+          <a class="nav-shop" href="shop.html">Shop</a>
+        </div>
+        <button type="button" class="mobile-toggle" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+      <div class="mega-panel mega-panel--house" role="region" aria-label="The House">
+        <div class="mega-inner">
+          <div class="mega-col">
+            <p class="mega-col-label">Maison</p>
+            <div class="mega-links">
+              <a href="house.html">Our story<span class="hint">The house in full</span></a>
+              <a href="house.html#heritage">Heritage<span class="hint">Città di Circo</span></a>
+              <a href="universe-chen.html">Principal Designer<span class="hint">Universe Chen</span></a>
+              <a href="house.html#craft">Craft<span class="hint">Construction &amp; collapse</span></a>
+              <a href="house.html#values">Values<span class="hint">What we stand for</span></a>
+            </div>
+          </div>
+          <div class="mega-col">
+            <p class="mega-col-label">Services</p>
+            <div class="mega-links">
+              <a href="client-services.html">Client services<span class="hint">Care &amp; appointments</span></a>
+              <a href="contact.html">Contact the house<span class="hint">Messages &amp; enquiries</span></a>
+              <a href="locations.html">Locations<span class="hint">Boutiques &amp; studios</span></a>
+            </div>
+          </div>
+          <a class="mega-feature" href="house.html#heritage">
+            <span class="mega-feature-kicker">Heritage</span>
+            <span class="mega-feature-title">Born from Città di Circo</span>
+            <p class="mega-feature-desc">
+              A provisional city of tents and performance—heritage that is built, undone, and
+              remade with every collection.
+            </p>
+          </a>
+        </div>
+      </div>
+      <div class="mega-panel mega-panel--archives" role="region" aria-label="Archives">
+        <div class="mega-inner">
+          <div class="mega-col">
+            <p class="mega-col-label">Editorial</p>
+            <div class="mega-links">
+              <a href="veil-of-absence.html">Veil of Absence<span class="hint">The collection</span></a>
+              <a href="archives.html">Archives<span class="hint">Campaigns &amp; stories</span></a>
+              <a href="house.html#manifesto">Manifesto<span class="hint">Those who refuse to fit</span></a>
+              <a href="house.html#vision">Vision<span class="hint">Without forced resolution</span></a>
+            </div>
+          </div>
+          <div class="mega-col">
+            <p class="mega-col-label">Discover</p>
+            <div class="mega-links">
+              <a href="shop.html">Shop<span class="hint">Online boutique</span></a>
+              <a href="collections.html">Collections<span class="hint">Fashion, objets, scent</span></a>
+            </div>
+          </div>
+          <a class="mega-feature" href="veil-of-absence.html">
+            <span class="mega-feature-kicker">The collection</span>
+            <span class="mega-feature-title">Veil of Absence</span>
+            <p class="mega-feature-desc">
+              The quiet disappearance of ritual, ornament, and the gestures that once defined elegance.
+            </p>
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="mobile-overlay" aria-hidden="true">
+      <div class="mobile-overlay-inner">
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">The House</span>
+          <div class="mobile-sub">
+            <a href="house.html">Our story</a>
+            <a href="house.html#heritage">Heritage</a>
+            <a href="universe-chen.html">Principal Designer</a>
+            <a href="house.html#craft">Craft</a>
+            <a href="house.html#values">Values</a>
+          </div>
+        </div>
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">Editorial</span>
+          <a href="veil-of-absence.html">Veil of Absence</a>
+          <a href="archives.html">Archives &amp; campaigns</a>
+        </div>
+        <div class="mobile-nav-group">
+          <span class="mobile-nav-label">Services</span>
+          <a href="client-services.html">Client services</a>
+          <a href="contact.html">Contact</a>
+          <a href="locations.html">Locations</a>
+        </div>
+        <div class="mobile-nav-group">
+          <a href="shop.html" class="mobile-nav-cta">Shop</a>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <section class="locations-hero">
+        <div class="locations-hero-inner reveal">
+          <span class="label-upper">Legal &amp; Regulatory</span>
+          <h1 class="page-title" style="margin-bottom: 0">Terms of use</h1>
+          <p class="locations-lede">
+            The understanding for reading the house, opening an account, and ordering from the
+            boutique.
+          </p>
+        </div>
+      </section>
+
+      <section class="page-section" style="padding-top: 0">
+        <div class="container">
+          <article class="legal-doc reveal">
+            <p class="legal-updated">Last updated November 2026</p>
+            <p>
+              These terms describe the Cittàcico website as it stands: the house, and the online
+              boutique built into it.
+            </p>
+            <p>
+              The house has not published a registered company name, a tax number, or a court. It
+              presents itself as a New York maison. Questions go to
+              <a href="mailto:cittacico@gmail.com">cittacico@gmail.com</a>.
+            </p>
+
+            <h2>Using the site</h2>
+            <p>
+              You may read the house, write to it, and, when the boutique is open, keep an account
+              and place an order. On the public site the boutique is closed to visitors until the
+              house opens it. Shop pages then return you to the house. These terms still describe the
+              boutique, because the pages exist and will take an order when they are open.
+            </p>
+            <p>
+              Do not interfere with the site, attempt the back office without being invited, or
+              present yourself as the house.
+            </p>
+
+            <h2>Accounts</h2>
+            <p>
+              An account needs an email and a password of at least eight characters. You may add your
+              name, a date of birth, a sex or leave it unsaid, a country and region, a telephone, a
+              delivery address, and a choice about house correspondence. Confirmation of the account,
+              and a reset of the password, are sent by email. You are responsible for that email and
+              that password.
+            </p>
+            <p>
+              Signing in keeps the bag and the order history with the account. Signing out clears the
+              bag on that device. A guest may check out with an email alone. The checkout states that
+              a guest order is recorded against that email and appears if you later register with the
+              same address.
+            </p>
+
+            <h2>The boutique and an order</h2>
+            <p>
+              Pieces, prices, and availability are shown as the house keeps them, in US dollars. A
+              bag may be kept in the browser and, once you are signed in, with the account.
+            </p>
+            <p>
+              Placing an order sends the selection, the email, and the delivery address to the house.
+              It is a request the house records. While payment is not taken on this site, it is not,
+              by itself, a completed sale.
+            </p>
+
+            <h2>Payment</h2>
+            <p>
+              No payment is taken at checkout while the house has no merchant account. The payment
+              step says that the house will write to confirm the order and arrange settlement.
+              Nothing is charged on this page.
+            </p>
+            <p>
+              When the house enables payments, that step continues to Stripe. Card, Apple Pay, and
+              other wallets Stripe offers are taken on Stripe’s page, not on this site. If you leave
+              before paying, the bag remains. The bag is cleared once the order is paid or, while
+              payments are off, once the order is recorded and the confirmation page opens. If a
+              payment is declined, the failure page states that no charge has been made.
+            </p>
+
+            <h2>Delivery, tax, and returns</h2>
+            <p>
+              Checkout shows shipping at no charge and tax at zero. It also says that complimentary
+              standard delivery applies when fulfillment is live, and that tax will be calculated
+              from the delivery address. The figures to rely on are those the house confirms in
+              writing. The house has not published the countries it will ship to, a delivery time, or
+              a duty.
+            </p>
+            <p>
+              The checkout mentions complimentary returns within the house’s policy. A numbered window
+              is not published here. Client services answers questions of sizing, lead time, shipping,
+              and exchange. Write to
+              <a href="mailto:cittacico@gmail.com">cittacico@gmail.com</a> before you send a piece
+              back. Appointments, care, and orders are also described on
+              <a href="client-services.html">Client services</a>.
+            </p>
+
+            <h2>Visits</h2>
+            <p>
+              The <a href="locations.html">Locations</a> page lists where the house receives clients,
+              including a New York studio by appointment and a European studio in Milano whose street
+              address is not yet announced. A visit is confirmed only when the house says so.
+            </p>
+
+            <h2>The house’s work</h2>
+            <p>
+              The name Cittàcico, the campaigns, the photographs, and the text on this site belong to
+              the house. Please do not copy them for your own trade. The principal designer is
+              credited on the site as Universe Chen.
+            </p>
+
+            <h2>The limits of these pages</h2>
+            <p>
+              The site may be unavailable, and a piece may leave the catalogue. The house does not
+              promise that every order can be fulfilled. While payment is not taken here, an order is
+              settled only when the house confirms it.
+            </p>
+            <p>
+              These terms do not name a registered company and do not choose a court. If something in
+              an order needs to be put right, begin with client services.
+            </p>
+            <p>
+              The house may revise these terms as the boutique opens and as payment is connected. The
+              date on this page is the one to read. See also the
+              <a href="privacy.html">privacy policy</a> and the
+              <a href="cookies.html">cookie notice</a>.
+            </p>
+
+            <p class="legal-related">
+              <a href="privacy.html">Privacy policy</a>
+              <a href="terms.html" aria-current="page">Terms of use</a>
+              <a href="cookies.html">Cookie settings</a>
+              <a href="mailto:cittacico@gmail.com">cittacico@gmail.com</a>
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a class="logo" href="index.html">CITTÀCICO</a>
+          <p class="footer-tagline">
+            A New York house for fashion, objects, and fragrance—a space between luxury and
+            studio, for those who refuse to fit.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>The House</h4>
+          <ul>
+            <li><a href="house.html">Our story</a></li>
+            <li><a href="house.html#heritage">Heritage</a></li>
+            <li><a href="universe-chen.html">Principal Designer</a></li>
+            <li><a href="house.html#craft">Craft</a></li>
+            <li><a href="house.html#values">Values</a></li>
+            <li><a href="veil-of-absence.html">Veil of Absence</a></li>
+            <li><a href="archives.html">Archives</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Client care</h4>
+          <ul>
+            <li><a href="client-services.html">Client services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="locations.html">Locations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Boutique</h4>
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="collections.html">All collections</a></li>
+            <li><a href="collection-fashion.html">Fashion</a></li>
+            <li><a href="collection-accessories.html">Accessories</a></li>
+            <li><a href="collection-fragrance.html">Fragrance</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/cittacico?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==">Instagram</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Pinterest</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal &amp; Regulatory</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy policy</a></li>
+            <li><a href="terms.html">Terms of use</a></li>
+            <li><a href="cookies.html">Cookie settings</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>© 2026 Cittàcico. All rights reserved.</p>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy policy</a>
+          <a href="terms.html">Terms of use</a>
+          <a href="cookies.html">Cookie settings</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/cittacico-backend.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
