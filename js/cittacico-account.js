@@ -1,12 +1,16 @@
 /*
- * Client account page: sign in, registration, personal details, default
+ * Client account page: password recovery, personal details, default
  * delivery address, and the full order history.
+ * Signed-out visits leave for login.html. Registration lives on signup.html.
  */
 (function () {
   "use strict";
 
   const page = document.querySelector("[data-account-page]");
-  if (!page || !window.CITTACICO) return;
+  if (!page || !window.CITTACICO) {
+    document.documentElement.classList.remove("account-booting");
+    return;
+  }
 
   const backend = window.CITTACICO;
   const loadingEl = page.querySelector("[data-account-loading]");
@@ -142,11 +146,16 @@
   const recoveryForm = page.querySelector("[data-recovery-form]");
   const recoveryMessage = page.querySelector("[data-recovery-message]");
 
+  function revealAccountPage() {
+    document.documentElement.classList.remove("account-booting");
+  }
+
   function showRecovery() {
     if (loadingEl) loadingEl.hidden = true;
     if (gateEl) gateEl.hidden = true;
     if (dashboardEl) dashboardEl.hidden = true;
     if (recoveryEl) recoveryEl.hidden = false;
+    revealAccountPage();
   }
 
   if (recoveryForm) {
@@ -378,10 +387,16 @@
     }
 
     if (!backend.getSession()) {
-      if (gateEl) gateEl.hidden = false;
-      if (dashboardEl) dashboardEl.hidden = true;
+      var hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      var queryParams = new URLSearchParams(window.location.search);
+      var notice = hashParams.get("error_description") || queryParams.get("error_description") || "";
+      var dest = "login.html";
+      if (notice) dest += "?notice=" + encodeURIComponent(notice);
+      window.location.replace(dest);
       return;
     }
+
+    revealAccountPage();
 
     if (gateEl) gateEl.hidden = true;
     if (dashboardEl) dashboardEl.hidden = false;
@@ -403,5 +418,8 @@
 
     const [orders] = await Promise.all([backend.listMyOrders(), loadDefaultAddress()]);
     renderOrders(orders);
+  }).catch(function () {
+    revealAccountPage();
+    if (!backend.getSession() && gateEl) gateEl.hidden = false;
   });
 })();

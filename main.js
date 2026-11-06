@@ -232,6 +232,8 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
   var pagePath = (window.location.pathname || "").split("/").pop() || "index.html";
   var isAuthPage =
     pagePath === "account.html" ||
+    pagePath === "login.html" ||
+    pagePath === "signup.html" ||
     pagePath === "register.html" ||
     pagePath === "admin.html" ||
     pagePath === "payment-success.html" ||
@@ -279,8 +281,8 @@ window.CITTACICO_PRODUCTS = window.CITTACICO_PRODUCTS || [
       "and receive future news from the maison." +
       "</p>" +
       '<div class="member-modal-actions">' +
-      '<a class="btn-checkout" href="register.html">Register</a>' +
-      '<a class="account-link-button" href="account.html">Sign in</a>' +
+      '<a class="btn-checkout" href="signup.html">Sign up</a>' +
+      '<a class="account-link-button" href="login.html">Log in</a>' +
       '<button type="button" class="account-link-button" data-member-continue>Continue without joining</button>' +
       "</div>" +
       "</div>";

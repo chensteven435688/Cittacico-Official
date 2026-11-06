@@ -27,6 +27,19 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      document.documentElement.classList.add("account-booting");
+    </script>
+    <style>
+      html.account-booting .site-header,
+      html.account-booting .mobile-overlay,
+      html.account-booting main,
+      html.account-booting .site-footer,
+      html.account-booting .scroll-progress,
+      html.account-booting .custom-cursor {
+        visibility: hidden;
+      }
+    </style>
   </head>
   <body data-section="house">
     <div class="scroll-progress" aria-hidden="true"></div>
@@ -147,7 +160,7 @@
               </form>
               <p class="account-switch">
                 Not a member yet?
-                <a href="register.html">Create an account</a>
+                <a href="signup.html">Create an account</a>
               </p>
             </div>
           </div>
